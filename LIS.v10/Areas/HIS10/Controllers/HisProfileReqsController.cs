@@ -122,6 +122,8 @@ namespace LIS.v10.Areas.HIS10.Controllers
 
             ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name");
             ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title");
+            ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name");
+            ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name");
             return View(newreq);
         }
 
@@ -130,7 +132,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,HisProfileId,HisRequestId,dtRequested,dtSchedule,dtPerformed,Remarks")] HisProfileReq hisProfileReq)
+        public ActionResult Create([Bind(Include = "Id,HisProfileId,HisRequestId,dtRequested,dtSchedule,dtPerformed,Remarks,HisPhysicianId,HisInchargeId")] HisProfileReq hisProfileReq)
         {
             if (ModelState.IsValid)
             {
@@ -141,6 +143,8 @@ namespace LIS.v10.Areas.HIS10.Controllers
 
             ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name", hisProfileReq.HisProfileId);
             ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title", hisProfileReq.HisRequestId);
+            ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name");
+            ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name");
             return View(hisProfileReq);
         }
 
@@ -158,6 +162,9 @@ namespace LIS.v10.Areas.HIS10.Controllers
             }
             ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name", hisProfileReq.HisProfileId);
             ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title", hisProfileReq.HisRequestId);
+            ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name", hisProfileReq.HisPhysicianId);
+            ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name", hisProfileReq.HisInchargeId);
+
             return View(hisProfileReq);
         }
 
@@ -166,7 +173,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,HisProfileId,HisRequestId,dtRequested,dtSchedule,dtPerformed,Remarks")] HisProfileReq hisProfileReq)
+        public ActionResult Edit([Bind(Include = "Id,HisProfileId,HisRequestId,dtRequested,dtSchedule,dtPerformed,Remarks,HisPhysicianId,HisInchargeId")] HisProfileReq hisProfileReq)
         {
             if (ModelState.IsValid)
             {
@@ -176,6 +183,8 @@ namespace LIS.v10.Areas.HIS10.Controllers
             }
             ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name", hisProfileReq.HisProfileId);
             ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title", hisProfileReq.HisRequestId);
+            ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name", hisProfileReq.HisPhysicianId);
+            ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name", hisProfileReq.HisInchargeId);
             return View(hisProfileReq);
         }
 
