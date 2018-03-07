@@ -117,12 +117,22 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // GET: HIS10/HisProfileReqs/Create
         public ActionResult Create()
         {
+
+            int iPhysician = 0;
+            if (User.Identity.IsAuthenticated)
+            {
+                string userAccntId = User.Identity.GetUserId();
+                var physician = db.HisPhysicians.Where(d => d.AccntUserId == userAccntId).FirstOrDefault();
+                if (physician != null) iPhysician = (int)physician.Id;
+            }
+
+
             var newreq = new HisProfileReq();
             newreq.dtRequested = System.DateTime.Today;
 
             ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name");
             ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title");
-            ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name");
+            ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name", iPhysician);
             ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name");
             return View(newreq);
         }
