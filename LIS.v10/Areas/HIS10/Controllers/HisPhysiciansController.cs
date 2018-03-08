@@ -78,8 +78,9 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Remarks,AccntUserId")] HisPhysician hisPhysician)
+        public ActionResult Create([Bind(Include = "Id,Name,Remarks,AccntUserId,ContactInfo")] HisPhysician hisPhysician)
         {
+            
             if (ModelState.IsValid)
             {
                 db.HisPhysicians.Add(hisPhysician);
@@ -114,7 +115,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Remarks,AccntUserId,ContactInfo")] HisPhysician hisPhysician)
+        public ActionResult Edit([Bind(Include = "Id,Name,Remarks,AccntUserId,ContactInfo,ContactInfo")] HisPhysician hisPhysician)
         {
             if (ModelState.IsValid)
             {

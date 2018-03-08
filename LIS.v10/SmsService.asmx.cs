@@ -46,7 +46,22 @@ namespace LIS.v10
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
 
+        //get all list of contact list from 'HisNotificationsRecipients' Table using the Notification id 
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void getRecipientsLists(int notificationId)
+        {
+            string sql = "SELECT TOP 3 [Id],[HisNotificationId],[ContactInfo]  FROM [aspnet-LIS.v10-20170509105835].[dbo].[HisNotificationRecipients] where HisNotificationRecipients.HisNotificationId = " + notificationId;
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);    //execute sqlAdapter
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
         }
 
 
@@ -56,7 +71,7 @@ namespace LIS.v10
         public void getList()
         {
 
-            string sql = "SELECT TOP 1000 [Id],[HisNotificationId],[DtSending],[Status],[Remarks] FROM [aspnet-LIS.v10-20170509105835].[dbo].[HisNotificationLogs]";
+            string sql = "SELECT TOP 1000 * FROM [aspnet-LIS.v10-20170509105835].[dbo].[HisNotificationLogs]";
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
             DataSet ds = new DataSet();
@@ -149,9 +164,11 @@ namespace LIS.v10
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void getUnsentItems()
         {
-            string sql = "SELECT [Id],[RecType] ,[Recipient] ,[Message],[DtSending] " +
-                "FROM [dbo].[HisNotifications] WHERE HisNotifications.id " +
-                "NOT IN (SELECT HisNotificationLogs.HisNotificationId FROM HisNotificationLogs)";
+
+            string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications "+
+                  "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId "+
+                  "WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs)";
+
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
             DataSet ds = new DataSet();

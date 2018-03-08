@@ -46,7 +46,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Remarks,AccntUserId")] HisIncharge hisIncharge)
+        public ActionResult Create([Bind(Include = "Id,Name,Remarks,AccntUserId,ContactInfo")] HisIncharge hisIncharge)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Remarks,AccntUserId")] HisIncharge hisIncharge)
+        public ActionResult Edit([Bind(Include = "Id,Name,Remarks,AccntUserId,ContactInfo")] HisIncharge hisIncharge)
         {
             if (ModelState.IsValid)
             {

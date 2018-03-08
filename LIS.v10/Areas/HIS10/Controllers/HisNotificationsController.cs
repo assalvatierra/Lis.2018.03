@@ -46,21 +46,30 @@ namespace LIS.v10.Areas.HIS10.Controllers
         //{
         //    return View();
         //}
-
+         
         public ActionResult Create(int? id)
         {
-            ViewBag.RefId = id.ToString();
+            int requestid = (int)id;
+            ViewBag.RefId = requestid.ToString();
+            HisProfileReq req = db.HisProfileReqs.Where(s => s.Id == requestid).FirstOrDefault();
+            //Models.HisRequest req = db.HisRequests.Find((int)requestid);
+            if (requestid != 0)
+            {
 
-            Models.HisRequest req = db.HisRequests.Find((int)id);
+                Models.HisNotification temp = new HisNotification();
+                temp.DtSending = (DateTime)req.dtSchedule;
+                temp.RefId = requestid;
+                temp.RecType = "Client";
+                temp.RefTable = "HisProfileReqs";
+                temp.Message = db1.generateMessage((int)requestid);
 
-            Models.HisNotification temp = new HisNotification();
-            temp.Message = "test" + id;
-            temp.DtSending = DateTime.Now;
-            temp.RefId = id;
-            temp.RecType = "Client";
-            temp.RefTable = "HisProfileReqs";
+                //create contact list
+                
+                return View(temp);
 
-            return View(temp);
+            }
+
+            return View();
         }
 
         // POST: HIS10/HisNotifications/Create
@@ -74,15 +83,49 @@ namespace LIS.v10.Areas.HIS10.Controllers
             {
                 db.HisNotifications.Add(hisNotification);
                 
-
                 Models.HisProfileReq request = db.HisProfileReqs.Find(hisNotification.RefId);
                 request.dtRequested = DateTime.Now;
                 request.dtSchedule = hisNotification.DtSending;
                 
+                //create contact lists
+
+                HisNotificationRecipient recipient = new HisNotificationRecipient();
+                recipient.HisNotificationId = hisNotification.Id;
+
+                //get contact number of physician
+                HisPhysician physician = db.HisPhysicians.Where(s => s.Id == request.HisPhysicianId).FirstOrDefault();
+                var notify_Physician = new HisNotificationRecipient //Make sure you have a table called test in DB
+                {
+                    HisNotificationId = hisNotification.Id,
+                    ContactInfo = physician.ContactInfo
+                };
+
+                //get contact number of incharge
+                HisIncharge incharge = db.HisIncharges.Where(s => s.Id == request.HisInchargeId).FirstOrDefault();
+                HisNotificationRecipient notify_inchage = new HisNotificationRecipient
+                {
+                    HisNotificationId = hisNotification.Id,
+                    ContactInfo = incharge.ContactInfo
+                };
+
+                //get contact info of client (hisprofile)
+                HisProfile client = db.HisProfiles.Where(s => s.Id == request.HisProfileId).FirstOrDefault();
+                HisNotificationRecipient notify_client = new HisNotificationRecipient
+                {
+                    HisNotificationId = hisNotification.Id,
+                    ContactInfo = client.ContactInfo
+                };
+
+                //add to database
+                db.HisNotificationRecipients.Add(notify_Physician);
+                db.HisNotificationRecipients.Add(notify_inchage);
+                db.HisNotificationRecipients.Add(notify_client);
                 db.SaveChanges();
 
                 //HIS10/HisProfileReqs?RptType=1&status=0
-                return RedirectToAction("Details", "HisNotifications", new { id = hisNotification.Id });
+                // return RedirectToAction("Details", "HisNotifications", new { id = hisNotification.Id });
+
+                View(hisNotification);
             }
 
             return View(hisNotification);

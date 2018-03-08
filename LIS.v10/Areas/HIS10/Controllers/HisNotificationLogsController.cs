@@ -13,7 +13,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
     public class HisNotificationLogsController : Controller
     {
         private His10DBContainer db = new His10DBContainer();
-
+        private Models.DBClasses db1 = new DBClasses();
         // GET: HIS10/HisNotificationLogs
         public ActionResult Index()
         {
@@ -33,14 +33,36 @@ namespace LIS.v10.Areas.HIS10.Controllers
             {
                 return HttpNotFound();
             }
+            HisNotificationRecipient recipient = db.HisNotificationRecipients.Where(s=>s.HisNotificationId == id).FirstOrDefault();
+
+            ViewBag.getNotificationLogs = db.HisNotificationLogs.Where(s => s.HisNotificationRecipientId == recipient.Id).ToList();
+
             return View(hisNotificationLog);
         }
 
         // GET: HIS10/HisNotificationLogs/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             ViewBag.HisNotificationId = new SelectList(db.HisNotifications, "Id", "RecType");
-            return View();
+
+            int requestid = (int)id;
+            ViewBag.RefId = requestid.ToString();
+            HisProfileReq req = db.HisProfileReqs.Where(s => s.Id == requestid).FirstOrDefault();
+            //Models.HisRequest req = db.HisRequests.Find((int)requestid);
+            if (requestid != 0)
+            {
+
+                Models.HisNotification temp = new HisNotification();
+                temp.DtSending = (DateTime)req.dtSchedule;
+                temp.RefId = requestid;
+                temp.RecType = "Client";
+                temp.RefTable = "HisProfileReqs";
+                temp.Message = db1.generateMessage((int)requestid);
+                // temp.Message = requestid.ToString();
+                return View(temp);
+            }
+            
+                return View();
         }
 
         // POST: HIS10/HisNotificationLogs/Create

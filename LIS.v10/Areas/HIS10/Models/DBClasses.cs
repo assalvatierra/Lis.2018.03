@@ -116,5 +116,65 @@ namespace LIS.v10.Areas.HIS10.Models
             db.HisNotificationLogs.Add(newNotifLog);
             db.SaveChanges();
         }
+
+
+        //for hisnotificationController
+
+        //make from message template
+        //---------------------------------------------
+        //NOTIFICATION
+        //For: <HisProfile.Name>
+        //Request: <HisRequest.Title> <HisProfile.Remarks>
+        //Scheduled on: <HisProfileReq.DtSchedule>
+        //By: <HisPhysician.Name>
+        //Assisted by: <HisIncharge.Name>
+        //---------------------------------------------
+
+        public string generateMessage(int requestId)
+        {
+
+            string messageTemplate = "";
+            string Formsg = " ", Requestmsg = " ", Scheduledmsg = " ", Physicianmsg = " ", Assistedmsg = " ";
+
+            HisProfileReq profilereq = db.HisProfileReqs.Where(s => s.Id == requestId).FirstOrDefault();
+
+            //get profilename
+            HisProfile profile = db.HisProfiles.Where(s => s.Id == profilereq.HisProfileId).FirstOrDefault();
+            Formsg = profile.Name;
+
+            //get request title and remarks
+            HisRequest request = db.HisRequests.Where(s => s.Id == profilereq.HisRequestId).FirstOrDefault();
+
+            Requestmsg = request.Title + "  " + profilereq.Remarks;
+
+            //get schedule
+            Scheduledmsg = profilereq.dtSchedule.ToString();
+
+            //get physician from hisPhysician
+            HisPhysician physician = db.HisPhysicians.Where(s => s.Id == profilereq.HisPhysicianId).FirstOrDefault();
+            Physicianmsg = physician.Name;
+
+            //get hisincharge name
+            HisIncharge incharge = db.HisIncharges.Where(s => s.Id == profilereq.HisInchargeId).FirstOrDefault();
+            Assistedmsg = incharge.Name;
+
+            messageTemplate = "NOTIFICATION"   + Environment.NewLine + Environment.NewLine +
+                "For: "         + Formsg       + Environment.NewLine +
+                "Request: "     + Requestmsg   + Environment.NewLine +
+                "Scheduled: "   + Scheduledmsg + Environment.NewLine +
+                "By: "          + Physicianmsg + Environment.NewLine +
+                "Assisted By: " + Assistedmsg  + Environment.NewLine;
+
+            return messageTemplate;
+        }
+
+        public string generateContactList(int notificationId)
+        {
+
+        
+
+            return "";
+        }
+
     }
 }
