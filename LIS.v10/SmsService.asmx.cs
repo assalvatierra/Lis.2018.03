@@ -53,7 +53,7 @@ namespace LIS.v10
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void getRecipientsLists(int notificationId)
         {
-            string sql = "SELECT TOP 3 [Id],[HisNotificationId],[ContactInfo]  FROM [aspnet-LIS.v10-20170509105835].[dbo].[HisNotificationRecipients] where HisNotificationRecipients.HisNotificationId = " + notificationId;
+            string sql = "SELECT * [Id],[HisNotificationId],[ContactInfo]  FROM [aspnet-LIS.v10-20170509105835].[dbo].[HisNotificationRecipients] where HisNotificationRecipients.HisNotificationId = " + notificationId;
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
             DataSet ds = new DataSet();
 
@@ -68,10 +68,14 @@ namespace LIS.v10
         //get notifications log
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void getList()
+        public void getLogsList()
         {
 
-            string sql = "SELECT TOP 1000 * FROM [aspnet-LIS.v10-20170509105835].[dbo].[HisNotificationLogs]";
+            string sql = "SELECT TOP 100  HisNotifications.Id, HisNotifications.DtSending, HisNotificationLogs.DTSending, HisNotificationLogs.Remarks," +
+                "HisNotificationRecipients.ContactInfo, HisNotifications.RecType, HisNotifications.Message, HisNotificationLogs.Status " +
+                "FROM [HisNotificationLogs] "+
+                "INNER JOIN [HisNotificationRecipients] ON [HisNotificationLogs].HisNotificationRecipientId = [HisNotificationRecipients].Id "+
+                "INNER JOIN [HisNotifications] ON [HisNotificationRecipients].HisNotificationId =  [HisNotifications].Id";
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
             DataSet ds = new DataSet();
@@ -116,7 +120,7 @@ namespace LIS.v10
 
         //update notificationlog for sent and failed to send messages
         [WebMethod]
-        public void updateLog(int NotificationID, string DtSending, string Status, string Remarks)
+        public void updateLog(int NotificationRecipientID, string DtSending, string Status, string Remarks)
         {
             string response = "success";
             try
@@ -126,8 +130,8 @@ namespace LIS.v10
                 var con = new SqlConnection(conString);
                 con.Open();
 
-                var cmd = new SqlCommand("INSERT INTO [dbo].[HisNotificationLogs] ([HisNotificationId],[DtSending],[Status],[Remarks]) VALUES" +
-                    " (" + NotificationID + ", '" + DtSending + "', '" + Status + "', '" + Remarks + "') ", con);
+                var cmd = new SqlCommand("INSERT INTO [dbo].[HisNotificationLogs] ([HisNotificationRecipientId],[DtSending],[Status],[Remarks]) VALUES" +
+                    " (" + NotificationRecipientID + ", '" + DtSending + "', '" + Status + "', '" + Remarks + "') ", con);
 
                 int row = cmd.ExecuteNonQuery();
                 con.Close();
@@ -165,10 +169,17 @@ namespace LIS.v10
         public void getUnsentItems()
         {
 
-            string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications "+
-                  "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId "+
-                  "WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs)";
+            string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
+                  "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
+                  "WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs) ";
 
+            //string sql = "SELECT TOP 1000  HisNotificationRecipients.Id, HisNotifications.DtSending," +
+            //    " HisNotificationRecipients.ContactInfo, HisNotifications.Message "+
+            //    " FROM [HisNotificationLogs]"+
+            //    " INNER JOIN [HisNotificationRecipients] ON [HisNotificationLogs].HisNotificationRecipientId = [HisNotificationRecipients].Id"+
+            //    " INNER JOIN [HisNotifications] ON [HisNotificationRecipients].HisNotificationId = [HisNotifications].Id"+
+            //    " WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs)"+
+            //    " OR [HisNotificationLogs].Status = 'Failed'";
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
             DataSet ds = new DataSet();
@@ -177,6 +188,32 @@ namespace LIS.v10
             Context.Response.ContentType = "application/json";
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
         }
+
+
+        //get list of unsent items 
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void getFailedItems()
+        {
+
+            //string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
+            //      "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
+            //      "WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs) ";
+
+            string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications "+
+                    "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId "+
+                    "WHERE HisNotificationRecipients.Id IN "+
+                    "(SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs "+
+                    "WHERE HisNotificationLogs.Status = 'Failed')";
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+
+            DataSet ds = new DataSet();
+            da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
 
         [WebMethod]
         public void addNotification(string recType, string recipient, string message, string dtSending)

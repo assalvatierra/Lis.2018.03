@@ -45,11 +45,10 @@ values
 
 insert into HisProfileReqs ([HisProfileId],[HisRequestId],[dtRequested],[dtSchedule],[dtPerformed],[Remarks], [HisPhysicianId],[HisInchargeId])
 values (1,1,'3/1/2018 10:00:00','3/6/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
-	    (2,2,'3/1/2018 10:00:00',NULL,NULL,'none');
+	    (2,2,'3/1/2018 10:00:00',NULL,NULL,'none',1,1);
 
 insert into HisNotifications ([RecType],[Recipient],[Message],[DtSending],[RefId],[RefTable])
 values
 	('Client','09279016517','Test Message','',1,'HisProfileReqs');
 
-INSERT INTO [dbo].[HisNotificationLogs] ([HisNotificationId],[DtSending],[Status],[Remarks])
-values (1, '2/15/2018', 'sent', 'none')
+TRUNCATE TABLE HisNotificationRecipients;

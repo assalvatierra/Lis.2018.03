@@ -62,7 +62,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
                 temp.RecType = "Client";
                 temp.RefTable = "HisProfileReqs";
                 temp.Message = db1.generateMessage((int)requestid);
-
+                temp.Recipient = "0";
                 //create contact list
                 
                 return View(temp);

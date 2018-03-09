@@ -30,6 +30,11 @@
             @Html.ActionLink("Create Login", "CreateLogin", new { id = item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
+        <td>
+            @Html.ActionLink("Active Request", "DisplayReq", "HisProfileReqs", new {filterType="Active", id = item.Id },null) |
+            @Html.ActionLink("Previous Request", "DisplayReq", "HisProfileReqs", new { filterType = "Previous", id = item.Id },null) |
+            @Html.ActionLink("Recent History", "DisplayReq", "HisProfileReqs", new { filterType = "All", id = item.Id },null)
+        </td>
     </tr>
 }
 

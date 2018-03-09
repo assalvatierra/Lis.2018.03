@@ -28,15 +28,22 @@ namespace LIS.v10.Areas.HIS10.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             HisNotificationLog hisNotificationLog = db.HisNotificationLogs.Find(id);
             if (hisNotificationLog == null)
             {
                 return HttpNotFound();
             }
-            HisNotificationRecipient recipient = db.HisNotificationRecipients.Where(s=>s.HisNotificationId == id).FirstOrDefault();
+            HisNotificationRecipient recipient = db.HisNotificationRecipients.Where(s => s.HisNotificationId == id).FirstOrDefault();
 
             ViewBag.getNotificationLogs = db.HisNotificationLogs.Where(s => s.HisNotificationRecipientId == recipient.Id).ToList();
 
+
+            HisNotificationRecipient Recipients = db.HisNotificationRecipients.Where(s => s.HisNotificationId == id).FirstOrDefault();
+            //ViewBag.getNotificationLogs = db.HisNotificationLogs.Where();
+
+            ViewBag.getNotificationLogs = db.HisNotificationLogs.Where(s => s.HisNotificationRecipient.HisNotification.Id == id).First();
+            
             return View(hisNotificationLog);
         }
 

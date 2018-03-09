@@ -100,6 +100,13 @@ namespace LIS.v10.Areas.HIS10.Controllers
 
 
         // GET: HIS10/HisProfileReqs/Details/5
+        public ActionResult DisplayReq(string filterType, int? id)
+        {
+            
+            return View(db.HisProfileReqs.Where(s => s.HisProfileId == id).ToList());
+        }
+
+        // GET: HIS10/HisProfileReqs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -125,10 +132,10 @@ namespace LIS.v10.Areas.HIS10.Controllers
                 var physician = db.HisPhysicians.Where(d => d.AccntUserId == userAccntId).FirstOrDefault();
                 if (physician != null) iPhysician = (int)physician.Id;
             }
-
-
+            
             var newreq = new HisProfileReq();
-            newreq.dtRequested = System.DateTime.Today;
+            newreq.dtRequested = System.DateTime.Now;
+            newreq.dtSchedule  = System.DateTime.Now.AddDays(1);
 
             ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name");
             ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title");
