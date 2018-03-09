@@ -32,8 +32,8 @@
         </td>
         <td>
             @Html.ActionLink("Active Request", "DisplayReq", "HisProfileReqs", new {filterType="Active", id = item.Id },null) |
-            @Html.ActionLink("Previous Request", "DisplayReq", "HisProfileReqs", new { filterType = "Previous", id = item.Id },null) |
-            @Html.ActionLink("Recent History", "DisplayReq", "HisProfileReqs", new { filterType = "All", id = item.Id },null)
+            @Html.ActionLink("Previous Request", "DisplayReq", "HisProfileReqs", new { filterType = "Latest5", id = item.Id },null) |
+            @Html.ActionLink("Recent History", "DisplayReq", "HisProfileReqs", new { filterType = "Latest20", id = item.Id },null)
         </td>
     </tr>
 }

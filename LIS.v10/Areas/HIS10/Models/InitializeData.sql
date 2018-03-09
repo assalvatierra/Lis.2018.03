@@ -8,7 +8,7 @@ values(1,'InsA101','101-22','Code Test Machine','V220 A2 P1200W','testin101','AC
 
 insert into HisPhysicians([Name],[Remarks],[ContactInfo])
 values('Dr Aga Mulach','Testing','09954508517'),
-('Dr Juan','Hehehe','09954508517');
+	  ('Dr Juan','Hehehe','09954508517');
 
 insert into HisOrderTypes([Description],[Remarks])
 values('BugTest','Testing202'),
@@ -39,16 +39,22 @@ values
 
 insert into HisIncharges ([Name],[Remarks],[ContactInfo])
 values
-('Freddie Roach','Trainer/consultant','09954508517'),
+('Freddie Roach','Trainer/Consultant','09954508517'),
 ('Chot Reyes','Coach','09954508517'),
-('Yeng Guiao','Trainer','09193812657');
+('Yeng Guiao','Trainer','09193812657'),
+('Cardo Dalisay','Consultant','09279016517');
 
 insert into HisProfileReqs ([HisProfileId],[HisRequestId],[dtRequested],[dtSchedule],[dtPerformed],[Remarks], [HisPhysicianId],[HisInchargeId])
 values (1,1,'3/1/2018 10:00:00','3/6/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
-	    (2,2,'3/1/2018 10:00:00',NULL,NULL,'none',1,1);
+	   (3,3,'3/6/2018 10:00:00','3/8/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
+	   (3,1,'3/7/2018 9:00:00','3/8/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
+	   (3,3,'3/8/2018 7:20:00','3/9/2018 10:36:00','3/9/2018 10:36:00','Initial',1,1),
+	   (3,2,'3/9/2018 15:32:00','3/10/2018 10:36:00',NULL,'Initial',1,1),
+	   (3,4,'3/10/2018 13:09:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
+	   (3,3,'3/10/2018 12:12:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
+	   (3,1,'3/11/2018 19:19:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
+	   (2,2,'3/1/2018 10:00:00',NULL,NULL,'none',1,1);
 
 insert into HisNotifications ([RecType],[Recipient],[Message],[DtSending],[RefId],[RefTable])
-values
-	('Client','09279016517','Test Message','',1,'HisProfileReqs');
-
-TRUNCATE TABLE HisNotificationRecipients;
+values ('Client','0','Test Message','',1,'HisProfileReqs'),
+	   ('Client','0','Test Message','',1,'HisProfileReqs');

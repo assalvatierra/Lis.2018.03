@@ -102,8 +102,40 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // GET: HIS10/HisProfileReqs/Details/5
         public ActionResult DisplayReq(string filterType, int? id)
         {
-            
-            return View(db.HisProfileReqs.Where(s => s.HisProfileId == id).ToList());
+            List<HisProfileReq> request;
+            if (filterType == "Active")
+            {
+                request = db.HisProfileReqs
+                    .Where(s => s.HisProfileId == id
+                             && s.dtPerformed == null )
+                    .OrderByDescending(s => s.dtRequested)
+                    .Take(5)
+                    .ToList();
+            }
+            else if (filterType == "Latest5")
+            {
+
+                request = db.HisProfileReqs
+                    .Where(s => s.HisProfileId == id)
+                    .OrderByDescending(s => s.dtRequested)
+                    .Take(2)
+                    .ToList();
+
+            }
+            else if (filterType == "Latest20")
+            {
+                request = db.HisProfileReqs
+                    .Where(s => s.HisProfileId == id)
+                    .OrderByDescending(s => s.dtRequested)
+                    .Take(20)
+                    .ToList();
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+
+            return View(request);
         }
 
         // GET: HIS10/HisProfileReqs/Details/5

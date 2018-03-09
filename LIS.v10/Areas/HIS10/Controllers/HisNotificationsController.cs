@@ -36,7 +36,9 @@ namespace LIS.v10.Areas.HIS10.Controllers
                 return HttpNotFound();
             }
             
-            ViewBag.getNotificationLogs = db1.getNotificationLogs(id);
+            List<HisNotificationLog> notiflist = db.HisNotificationLogs.Where(s=>s.HisNotificationRecipient.HisNotificationId == id).ToList();
+
+            ViewBag.getNotificationLogs = notiflist;
 
             return View(hisNotification);
         }
