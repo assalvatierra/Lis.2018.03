@@ -40,8 +40,7 @@
     }
     else
     {
-        if (ViewBag.PageType == "ADMIN" 
-            && (ViewBag.AppCode == "AC2018") )
+        if (ViewBag.PageType == "ADMIN")
         {
             <div class="col-md-4">
                 <h2>Admin</h2>
@@ -93,9 +92,9 @@
         }
 
 
-        if ( (ViewBag.PageType == "ADMIN" || ViewBag.PageType == "DOCTOR")
+        if ( (ViewBag.PageType == "ADMIN" || ViewBag.PageType == "DOCTOR" || ViewBag.PageType == "MEDTECH")
             && (ViewBag.AppCode == "LAB2018"))
-        {
+            {
             <div class="col-md-4">
                 <h2>Laboratory</h2>
                 <p>Laboratory Status</p>
