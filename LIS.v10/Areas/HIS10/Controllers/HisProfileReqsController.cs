@@ -24,6 +24,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
 
         public ActionResult Index(int? RptType, int? status)
         {
+            DateTime baseTime = DateTime.Today.AddDays(-7);
             if (RptType == null)
                 RptType = (int)Session["RPTTYPE"];
             else
@@ -41,7 +42,10 @@ namespace LIS.v10.Areas.HIS10.Controllers
                 hisProfileReqs = hisProfileReqs.OrderBy(d => d.dtSchedule);
             if (RptType == 3) //By Item
                 hisProfileReqs = hisProfileReqs.OrderBy(d => d.HisProfileId);
-
+            if (RptType == 4) //By Latest Entries
+                 hisProfileReqs = hisProfileReqs.Where(r=> r.dtRequested > baseTime).OrderBy(d => d.dtRequested); //7 days
+            if (RptType == 5) //By Latest Requests Done
+                hisProfileReqs = hisProfileReqs.Where(r => r.dtRequested > baseTime && r.dtPerformed != null).OrderBy(d => d.dtRequested);
             return View(hisProfileReqs.ToList());
         }
 

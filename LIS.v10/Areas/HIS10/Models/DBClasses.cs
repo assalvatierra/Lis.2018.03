@@ -26,6 +26,56 @@ namespace LIS.v10.Areas.HIS10.Models
         public string Remarks { get; set; }
     }
 
+    public class NotificationDetailsList
+    {
+        public int Id { get; set; }
+        public string HisNotificationId { get; set; }
+        public string Recipient { get; set; }
+        public string Name { get; set; }
+        public string DateSend { get; set; }
+        public string Status { get; set; }
+        public string Remarks { get; set; }
+        
+    }
+
+
+    public class NotifiedRequestLog
+    {
+        private int id1;
+        private int id2;
+        private DateTime? dtRequested;
+        private DateTime? dtSchedule;
+        private DateTime? dtPerformed;
+        private string v;
+
+        public NotifiedRequestLog(int id1, int id2, string recType, DateTime? dtRequested, DateTime? dtSchedule, DateTime? dtPerformed, string recipient, string message, string v)
+        {
+            this.id1 = id1;
+            this.id2 = id2;
+            RecType = recType;
+            this.dtRequested = dtRequested;
+            this.dtSchedule = dtSchedule;
+            this.dtPerformed = dtPerformed;
+            Recipient = recipient;
+            Message = message;
+            this.v = v;
+        }
+
+        public NotifiedRequestLog()
+        {
+        }
+
+        public int Id { get; set; }
+        public int HisNotificationId { get; set; }
+        public string RecType { get; set; }
+        public string DateRequest { get; set; }
+        public string DateSchedule { get; set; }
+        public string DateSent { get; set; }
+        public string Recipient { get; set; }
+        public string Message { get; set; }
+        public string Status { get; set; }
+    }
+
 
 
     public class DBClasses
@@ -170,11 +220,52 @@ namespace LIS.v10.Areas.HIS10.Models
 
         public string generateContactList(int notificationId)
         {
-
-        
-
+            
             return "";
         }
+
+        //Get list of failed notification 
+        public List<HisProfileReq> getFailedNotification()
+        {
+            // List<HisNotification> failedList = new List<HisNotification>();
+            List<HisProfileReq> failedreq = new List<HisProfileReq>();
+            List<int> failedreqs = new List<int>();
+
+            var failedlogs= db.HisNotificationLogs.Where(l => l.Status == "Failed");
+           
+            if (failedlogs != null)
+            {
+                foreach (var logs in failedlogs)
+                {
+                   if(db.HisNotificationLogs.Where(l=>l.HisNotificationRecipientId == logs.HisNotificationRecipientId).Count() > 1)
+                    {
+                        //if count is > 1
+                        //check if the request have a sent status with the same id
+                        int haveSent = db.HisNotificationLogs.Where(s => s.Status == "Sent" && s.HisNotificationRecipientId == logs.HisNotificationRecipientId).Count();
+                       
+                        //if the log have no sent message add to the list
+                        if (haveSent == 0)
+                        {
+                            int itemid = logs.HisNotificationRecipientId;
+                            failedreqs.Add(itemid);
+                        }
+                    }
+                    else
+                    {
+                        //if there is only one entry. add to list
+                        int itemid = logs.HisNotificationRecipientId;
+                        failedreqs.Add(itemid);
+                    }
+                }
+            //    db.HisNotificationLogs.Where(l=>l)
+            }
+            
+            var failedRecipients = db.HisNotificationRecipients.Where(r => failedreqs.Contains(r.Id)).Select(r=>r.HisNotificationId);
+            var failedList = db.HisNotifications.Where(f =>failedRecipients.Contains(f.Id)).Select(f=>f.RefId);
+            var failedrequest = db.HisProfileReqs.Where(q => failedList.Contains(q.Id)).ToList();
+            return failedrequest;
+        }
+
 
     }
 }

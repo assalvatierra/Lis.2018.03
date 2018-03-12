@@ -46,15 +46,42 @@ values
 
 insert into HisProfileReqs ([HisProfileId],[HisRequestId],[dtRequested],[dtSchedule],[dtPerformed],[Remarks], [HisPhysicianId],[HisInchargeId])
 values (1,1,'3/1/2018 10:00:00','3/6/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
-	   (3,3,'3/6/2018 10:00:00','3/8/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
-	   (3,1,'3/7/2018 9:00:00','3/8/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
-	   (3,3,'3/8/2018 7:20:00','3/9/2018 10:36:00','3/9/2018 10:36:00','Initial',1,1),
-	   (3,2,'3/9/2018 15:32:00','3/10/2018 10:36:00',NULL,'Initial',1,1),
+	   (3,3,'3/6/2018 10:00:00','3/8/2018 9:36:00','3/8/2018 9:36:00','Initial',1,1),
+	   (3,1,'3/7/2018 9:00:00','3/8/2018 15:36:00','3/8/2018 15:36:00','Initial',1,1),
+	   (3,3,'3/8/2018 7:20:00','3/9/2018 17:36:00','3/9/2018 17:36:00','Initial',1,1),
+	   (3,2,'3/9/2018 15:32:00','3/10/2018 10:36:00','3/9/2018 17:36:00','Initial',1,1),
 	   (3,4,'3/10/2018 13:09:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
 	   (3,3,'3/10/2018 12:12:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
 	   (3,1,'3/11/2018 19:19:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
 	   (2,2,'3/1/2018 10:00:00',NULL,NULL,'none',1,1);
 
 insert into HisNotifications ([RecType],[Recipient],[Message],[DtSending],[RefId],[RefTable])
-values ('Client','0','Test Message','',1,'HisProfileReqs'),
-	   ('Client','0','Test Message','',1,'HisProfileReqs');
+values ('Client','0','Test Message','3/6/2018 10:36:00',1,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','3/6/2018 9:36:00',2,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','3/6/2018 15:36:00',3,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','3/6/2018 17:36:00',4,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',5,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',6,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',7,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',8,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',9,'HisProfileReqs');
+
+
+insert into HisNotificationRecipients ([HisNotificationId],[ContactInfo])
+values (1,'09132465877'),(1,'09192959555'),(1,'09279016517'),
+	   (2,'09279016517'),(2,'09279016517'),(2,'09279016517'),
+	   (3,'09279016517'),(3,'09279016517'),(3,'09279016517'),
+	   (4,'09279016517'),(4,'09279016517'),(4,'09279016517'),
+	   (5,'09279016517'),(5,'09279016517'),(5,'09279016517'),
+	   (6,'09279016517'),(6,'09279016517'),(6,'09279016517'),
+	   (7,'09279016517'),(7,'09279016517'),(7,'09279016517'),
+	   (8,'09279016517'),(8,'09279016517'),(8,'09279016517'),
+	   (9,'09279016517'),(9,'09279016517'),(9,'09279016517');
+
+insert into HisNotificationLogs ([HisNotificationRecipientId],[DtSending],[Status],[Remarks])
+values (1,'3/6/2018 10:36:00','Sent','Test'),(2,'3/6/2018 10:36:00','Sent','Test'),(3,'3/6/2018 10:36:00','Sent','Test'),
+	   (4,'3/8/2018 9:36:00','Sent','Test'),(5,'3/8/2018 9:36:00','Sent','Test'),(6,'3/8/2018 9:36:00','Sent','Test'),
+	   (7,'3/9/2018 15:36:00','Sent','Test'),(8,'3/9/2018 15:36:00','Sent','Test'),(9,'3/9/2018 15:36:00','Sent','Test'),
+	   (10,'3/9/2018 17:36:00','Sent','Test'),(11,'3/9/2018 17:36:00','Sent','Test'),(12,'3/9/2018 17:36:00','Sent','Test'),
+	   (13,'3/10/2018 17:36:00','Failed','Test'),(13,'3/10/2018 18:36:00','Sent','Test'),(14,'3/10/2018 18:36:00','Sent','Test'),(15,'3/10/2018 18:36:00','Sent','Test'),
+	   (16,'3/9/2018 18:36:00','Failed','Test');

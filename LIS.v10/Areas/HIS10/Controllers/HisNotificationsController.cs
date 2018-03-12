@@ -14,15 +14,64 @@ namespace LIS.v10.Areas.HIS10.Controllers
     {
         private His10DBContainer db = new His10DBContainer();
         private Models.DBClasses db1 = new DBClasses();
-
-        // GET: HIS10/HisNotifications
-        public ActionResult Index()
-        {
-            return View(db.HisNotifications.ToList());
-        }
-
         
+        // GET: HIS10/HisNotifications
+        public ActionResult Index(string statusType)
+        {
+            List<HisProfileReq> request = new List<HisProfileReq>();
+            List<NotifiedRequestLog> notif = new List<NotifiedRequestLog>();
+            if (statusType == "Sent")
+            {
+                request.AddRange(db.HisProfileReqs.Where(r=>r.dtPerformed != null).ToList());
+                
+            }
+            else if (statusType == "Failed")
+            {
+                request.AddRange(db1.getFailedNotification());
+            }
+            
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                foreach (HisProfileReq req in request)
+                {
+                    //find the matched notification by id
+                    HisNotification n = db.HisNotifications.Where(s => s.RefId == req.Id).FirstOrDefault();
+                    List<HisNotificationRecipient> rcpts = db.HisNotificationRecipients.Where(r => r.HisNotificationId == n.Id).ToList();
 
+                    //make a list of recipients
+                    List<string> recipientList = new List<string>();
+
+                    //add each recipient to the list
+                    foreach (var item in rcpts)
+                    {
+                        recipientList.Add(item.ContactInfo);
+                    }
+                    //concat recipients 
+                    string RecipientsArray = string.Join("\n\r", recipientList);
+
+                    notif.Add(new NotifiedRequestLog()
+                    {
+                        Id = req.Id,
+                        HisNotificationId = n.Id,
+                        RecType = n.RecType,
+                        DateRequest = req.dtRequested.ToString(),
+                        DateSchedule = req.dtSchedule.ToString(),
+                        DateSent = req.dtPerformed.ToString(),
+                        Recipient = RecipientsArray,
+                        Message = n.Message,
+                        Status = statusType
+                    });
+                   
+
+                }
+                return View(notif);
+            }
+        }
+        
         // GET: HIS10/HisNotifications/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,10 +84,47 @@ namespace LIS.v10.Areas.HIS10.Controllers
             {
                 return HttpNotFound();
             }
-            
-            List<HisNotificationLog> notiflist = db.HisNotificationLogs.Where(s=>s.HisNotificationRecipient.HisNotificationId == id).ToList();
 
-            ViewBag.getNotificationLogs = notiflist;
+
+            //public int Id { get; set; }
+            //public string HisNotificationId { get; set; }
+            //public string Recipient { get; set; }
+            //public string Name { get; set; }
+            //public string DateSend { get; set; }
+            //public string Status { get; set; }
+            //public string Remarks { get; set; }
+
+            //get list of notification logs from given notification id
+            // List<HisNotificationLog> notiflist = db.HisNotificationLogs.Where(s=>s.HisNotificationRecipient.HisNotificationId == id).ToList();
+            List<HisNotificationLog> notiflist = db.HisNotificationLogs.Where(s => s.HisNotificationRecipient.HisNotificationId == id).ToList();
+            List<NotificationDetailsList> list = new List<NotificationDetailsList>();
+            foreach (var log in notiflist)
+            {
+                var recptNumber = db.HisNotificationRecipients.Where(r => r.Id == log.Id).Select(r => r.ContactInfo).FirstOrDefault();
+                var recpt = db.HisNotificationRecipients.Where(r => r.Id == log.Id).Select(r => r.HisNotificationId);
+                var notif = db.HisNotifications.Where(n => recpt.Contains(n.Id)).Select(n=>n.RefId);
+                var request = db.HisProfileReqs.Where(r => notif.Contains(r.Id)).FirstOrDefault();
+                var PhysicianContact = db.HisPhysicians.Where(q => q.Id == request.HisPhysicianId).FirstOrDefault();
+
+                string number = recptNumber;
+
+                list.Add(new NotificationDetailsList()
+                {
+                   Id = log.Id,
+                   HisNotificationId = log.Id.ToString(),
+                   Recipient = number,
+                   Name = "-",
+                   DateSend = log.DtSending.ToString(),
+                   Status = log.Status,
+                   Remarks = log.Remarks
+
+                });
+
+
+            }
+
+
+            ViewBag.getNotificationLogs = list;
 
             return View(hisNotification);
         }

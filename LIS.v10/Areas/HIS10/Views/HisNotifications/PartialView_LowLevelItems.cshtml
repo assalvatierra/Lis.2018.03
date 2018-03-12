@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LIS.v10.Areas.HIS10.Models.HisNotificationLog>
+﻿@model IEnumerable<LIS.v10.Areas.HIS10.Models.NotificationDetailsList>
 
 
 @* edit by jahdiel *@
@@ -7,7 +7,10 @@
     <table class="table table-listing">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.DtSending)
+                    @Html.DisplayNameFor(model => model.DateSend)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Recipient)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Status)
@@ -24,7 +27,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DtSending)
+                        @Html.DisplayFor(modelItem => item.DateSend)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Recipient)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Status)

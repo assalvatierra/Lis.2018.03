@@ -62,7 +62,7 @@
     </dl>
 </div>
 
-@{Html.RenderPartial("PartialView_LowLevelItems", (List<LIS.v10.Areas.HIS10.Models.HisNotificationLog>)ViewBag.getNotificationLogs);}
+@{Html.RenderPartial("PartialView_LowLevelItems", (List<LIS.v10.Areas.HIS10.Models.NotificationDetailsList>)ViewBag.getNotificationLogs);}
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

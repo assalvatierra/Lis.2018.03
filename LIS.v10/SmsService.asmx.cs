@@ -31,6 +31,8 @@ namespace LIS.v10
         {
             return "Hello World";
         }
+
+        
         // -- GET METHODS --//        
         //get all list of messages from 'HisNotifications' Table
         [WebMethod]
@@ -212,6 +214,46 @@ namespace LIS.v10
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
+        ////get list of unsent items 
+        //[WebMethod]
+        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        //public void getFailedItem2()
+        //{
+
+        //    //string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
+        //    //      "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
+        //    //      "WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs) ";
+
+        //    string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
+        //            "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
+        //            "WHERE HisNotificationRecipients.Id IN " +
+        //            "(SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs " +
+        //            "WHERE HisNotificationLogs.Status = 'Failed')";
+        //    SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+
+        //    DataSet ds = new DataSet();
+        //    da.Fill(ds);    //execute sqlAdapter
+        //    Context.Response.Clear();
+        //    Context.Response.ContentType = "application/json";
+        //    Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        //}
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void getListsofFailed(string notificationRecipientID)
+        {
+
+            string sql = "SELECT * FROM HisNotificationLogs WHERE Status = 'Failed' AND HisNotificationRecipientID = " + notificationRecipientID;
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+
+            DataSet ds = new DataSet();
+            da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+
         }
 
 

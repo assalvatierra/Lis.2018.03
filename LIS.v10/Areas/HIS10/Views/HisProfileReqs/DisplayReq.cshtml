@@ -16,9 +16,6 @@
     {
 
         <tr>
-            <td style="width:10%;">
-                <img src="~/Content/placeholder-image.jpg" height="50" />
-            </td>
             <td valign="top">
                 <span style="font: bold 14px calibre, verdana;">
                     @item.HisProfile.Name
@@ -60,5 +57,5 @@
 </table>
 
 <p>
-    @Html.ActionLink("Back to Profile List", "Index", "HisProfiles", new { area = "" }, null)
+    @Html.ActionLink("Back to Profile List", "Index", "HisProfiles", new { area = "HIS10" }, null)
 </p>

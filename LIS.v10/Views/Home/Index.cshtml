@@ -127,7 +127,9 @@
                     @Html.ActionLink("All Requests", "index", "HisProfileReqs", new { area = "HIS10", RptType = 1, status = 0 }, new { @class = "btn btn-default" })
                     @Html.ActionLink("By Schedule", "index", "HisProfileReqs", new { area = "HIS10", RptType = 2, status = 1 }, new { @class = "btn btn-default" })
                     @Html.ActionLink("By Item", "index", "HisProfileReqs", new { area = "HIS10", RptType = 3, status = 1 }, new { @class = "btn btn-default" })
-                </p>
+                    @Html.ActionLink("Latest Entries", "index", "HisProfileReqs", new { area = "HIS10", RptType = 4, status = 1 }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Latest Requests Done", "index", "HisProfileReqs", new { area = "HIS10", RptType = 5, status = 1 }, new { @class = "btn btn-default" })
+                 </p>
             </div>
         }
 
@@ -141,6 +143,20 @@
             </div>
         }
 
+        if (( ViewBag.PageType == "ADMIN")
+          && ((ViewBag.AppCode == "AC2018") || (ViewBag.AppCode == "LAB2018")  ))
+        {
+            <div class="col-md-4">
+                <h2>Notification</h2>
+                <p>Sms Notification logs and status</p>
+                <p>
+                    @Html.ActionLink("Notified Requests", "Index", "HisNotifications", new { area = "HIS10" , statusType = "Sent" }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Failed Requests", "Index", "HisNotifications", new { area = "HIS10", statusType = "Failed"  }, new { @class = "btn btn-default" })
+                  
+                </p>
+            </div>
+        }
+
         if (ViewBag.PageType == "THERAPHY")
         {
             <div class="col-md-4">
@@ -149,7 +165,8 @@
                 <p>
                     @Html.ActionLink("All Requests", "TheraphyTasks", "HisProfileReqs", new { area = "HIS10", RptType = 1, status = 0 }, new { @class = "btn btn-default" })
                     @Html.ActionLink("By Schedule", "TheraphyTasks", "HisProfileReqs", new { area = "HIS10", RptType = 2, status = 1 }, new { @class = "btn btn-default" })
-                    @Html.ActionLink("By Item", "TheraphyTasks", "HisProfileReqs", new { area = "HIS10", RptType = 3, status = 1 }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("By Item", "TheraphyTasks", "HisProfileReqs", new { area = "HIS10", RptType = 3, status = 1 }, new { @class = "btn btn-default" })  
+                   
                 </p>
             </div>
 
