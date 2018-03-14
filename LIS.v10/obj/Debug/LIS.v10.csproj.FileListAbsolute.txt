@@ -258,7 +258,6 @@ D:\Data\Real\Apps\GitHub\Lis.2018.03\Lis.2018.03\LIS.v10\bin\Microsoft.Owin.Secu
 D:\Data\Real\Apps\GitHub\Lis.2018.03\Lis.2018.03\LIS.v10\obj\Debug\LIS.v10.dll
 D:\Data\Real\Apps\GitHub\Lis.2018.03\Lis.2018.03\LIS.v10\obj\Debug\LIS.v10.pdb
 D:\Data\Real\Apps\GitHub\Lis.2018.03\Lis.2018.03\LIS.v10\obj\Debug\LIS.v10.csprojResolveAssemblyReference.cache
-C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\obj\Debug\LIS.v10.csprojResolveAssemblyReference.cache
 C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\obj\Debug\LIS.v10.dll
 C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\obj\Debug\LIS.v10.pdb
 C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\bin\ApplicationInsights.config
@@ -340,3 +339,4 @@ C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\bin\Microsoft.Owin.
 C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\obj\Debug\LIS.v10.csprojResolveAssemblyReference.cache

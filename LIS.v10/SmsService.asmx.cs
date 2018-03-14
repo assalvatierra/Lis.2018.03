@@ -10,6 +10,7 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web.UI;
 using LIS.v10.Areas.HIS10.Models;
+using LIS.v10.Areas.Rpi.Models;
 namespace LIS.v10
 {
     /// <summary>
@@ -25,6 +26,8 @@ namespace LIS.v10
 
         public His10DBContainer db = new His10DBContainer();
         public DBClasses db1 = new DBClasses();
+        public RpiDBContainer1 rpidb = new RpiDBContainer1();
+       // public RpiModelContainer rpidb = new RpiModelContainer();
 
         [WebMethod]
         public string HelloWorld()
@@ -32,8 +35,8 @@ namespace LIS.v10
             return "Hello World";
         }
 
-        
-        // -- GET METHODS --//        
+        // -- SMS NOTIFICATION METHODS --//        
+        #region SMS Notification WebService
         //get all list of messages from 'HisNotifications' Table
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -174,14 +177,7 @@ namespace LIS.v10
             string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
                   "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
                   "WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs) ";
-
-            //string sql = "SELECT TOP 1000  HisNotificationRecipients.Id, HisNotifications.DtSending," +
-            //    " HisNotificationRecipients.ContactInfo, HisNotifications.Message "+
-            //    " FROM [HisNotificationLogs]"+
-            //    " INNER JOIN [HisNotificationRecipients] ON [HisNotificationLogs].HisNotificationRecipientId = [HisNotificationRecipients].Id"+
-            //    " INNER JOIN [HisNotifications] ON [HisNotificationRecipients].HisNotificationId = [HisNotifications].Id"+
-            //    " WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs)"+
-            //    " OR [HisNotificationLogs].Status = 'Failed'";
+            
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
             DataSet ds = new DataSet();
@@ -217,28 +213,25 @@ namespace LIS.v10
         }
 
         ////get list of unsent items 
-        //[WebMethod]
-        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        //public void getFailedItem2()
-        //{
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void getFailedItem2()
+        {
+            db1.getFailedNotification();
+            string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
+                    "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
+                    "WHERE HisNotificationRecipients.Id IN " +
+                    "(SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs " +
+                    "WHERE HisNotificationLogs.Status = 'Failed')";
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
-        //    //string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
-        //    //      "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
-        //    //      "WHERE HisNotificationRecipients.Id NOT IN (SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs) ";
+            DataSet ds = new DataSet();
+            da.Fill(ds);    //execute sqlAdapter
 
-        //    string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
-        //            "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
-        //            "WHERE HisNotificationRecipients.Id IN " +
-        //            "(SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs " +
-        //            "WHERE HisNotificationLogs.Status = 'Failed')";
-        //    SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
-
-        //    DataSet ds = new DataSet();
-        //    da.Fill(ds);    //execute sqlAdapter
-        //    Context.Response.Clear();
-        //    Context.Response.ContentType = "application/json";
-        //    Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
-        //}
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -250,6 +243,7 @@ namespace LIS.v10
 
             DataSet ds = new DataSet();
             da.Fill(ds);    //execute sqlAdapter
+
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
@@ -274,5 +268,88 @@ namespace LIS.v10
             Context.Response.Clear();
             Context.Response.Write(response);
         }
+        #endregion
+
+
+        //-- RasperryPi Methods --//
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+       public void rpi_getDevice(int deviceId)
+        {
+            //RpiDevice device = rpidb.RpiDevices.Where(r=>r.Id == id).FirstOrDefault();
+            //RpiDevice device = rpidb.RpiDevices.Find(id);
+            string sql = "SELECT * FROM [aspnet-LIS.v10-20170509105835].[dbo].[RpiDevices] WHERE [Id] = " + deviceId;
+            // string sql = rpidb.RpiDevices.Find(id).ToString();
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);    //execute sqlAdapter
+            
+            //da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void rpi_getAllDevice()
+        {
+            string sql = "SELECT * FROM [aspnet-LIS.v10-20170509105835].[dbo].[RpiDevices]";
+           
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void rpi_getControl(int deviceId)
+        {
+            string sql = "SELECT * FROM [aspnet-LIS.v10-20170509105835].[dbo].[RpiControls] WHERE [RpiDeviceId] = " + deviceId;
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void rpi_getDataLog(int deviceId)
+        {
+            string sql = "SELECT * FROM [aspnet-LIS.v10-20170509105835].[dbo].[RpiDatalogs] WHERE [RpiDeviceId] = " + deviceId;
+
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
+
+        //POST METHODS
+        [WebMethod]
+        public void rpi_setDataLog(int deviceId, string Data, string DtLog)
+        {
+            string sql = "Insert into RpiDatalogs([DtRead],[DataRead],[RpiDeviceId]) "+
+                "values ('"+ DtLog + "','"+ Data +"','"+ deviceId +"')";
+
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.Write("200");
+        }
+
     }
 }

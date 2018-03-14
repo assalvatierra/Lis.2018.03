@@ -16,6 +16,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
         private His10DBContainer db = new His10DBContainer();
 
         // GET: HIS10/HisProfileReqs
+
         //public ActionResult Index()
         //{
         //    var hisProfileReqs = db.HisProfileReqs.Include(h => h.HisProfile).Include(h => h.HisRequest);
@@ -87,6 +88,8 @@ namespace LIS.v10.Areas.HIS10.Controllers
 
             return RedirectToAction("Login", "Account");
         }
+
+
         public ActionResult TaskDone(int? id)
         {
             var data = db.HisProfileReqs.Find(id);
