@@ -24,6 +24,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Version" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="RpiDatalogs">
     <Key>
@@ -92,6 +93,7 @@
           <Property Name="Description" Type="String" Nullable="false" />
           <NavigationProperty Name="RpiDatalogs" Relationship="RpiDB.RpiDeviceRpiDatalog" FromRole="RpiDevice" ToRole="RpiDatalog" />
           <NavigationProperty Name="RpiControls" Relationship="RpiDB.RpiDeviceRpiControl" FromRole="RpiDevice" ToRole="RpiControl" />
+          <Property Name="Version" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="RpiDatalog">
           <Key>
@@ -148,6 +150,7 @@
         <MappingFragment StoreEntitySet="RpiDevices">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

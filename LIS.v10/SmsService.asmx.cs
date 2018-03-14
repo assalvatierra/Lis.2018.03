@@ -338,10 +338,25 @@ namespace LIS.v10
 
         //POST METHODS
         [WebMethod]
-        public void rpi_setDataLog(int deviceId, string Data, string DtLog)
+        public void rpi_setDataLog(int deviceId, string Data, DateTime DtLog)
         {
             string sql = "Insert into RpiDatalogs([DtRead],[DataRead],[RpiDeviceId]) "+
                 "values ('"+ DtLog + "','"+ Data +"','"+ deviceId +"')";
+
+            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            DataSet ds = new DataSet();
+
+            da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.Write("200");
+        }
+
+        //POST METHODS
+        [WebMethod]
+        public void rpi_setControl(int deviceId, string Data, DateTime DtLog)
+        {
+            string sql = "Insert into RpiDatalogs([DtRead],[DataRead],[RpiDeviceId]) " +
+                "values ('" + DtLog + "','" + Data + "','" + deviceId + "')";
 
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
             DataSet ds = new DataSet();

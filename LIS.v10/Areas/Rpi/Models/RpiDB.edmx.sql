@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/13/2018 16:56:02
+-- Date Created: 03/14/2018 15:41:12
 -- Generated from EDMX file: C:\Users\VILLOSA\Documents\GithubClassic\Lis.2018.03\LIS.v10\Areas\Rpi\Models\RpiDB.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,26 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_RpiDeviceRpiDatalog]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RpiDatalogs] DROP CONSTRAINT [FK_RpiDeviceRpiDatalog];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RpiDeviceRpiControl]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RpiControls] DROP CONSTRAINT [FK_RpiDeviceRpiControl];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[RpiDevices]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RpiDevices];
+GO
+IF OBJECT_ID(N'[dbo].[RpiDatalogs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RpiDatalogs];
+GO
+IF OBJECT_ID(N'[dbo].[RpiControls]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RpiControls];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -30,7 +45,8 @@ GO
 -- Creating table 'RpiDevices'
 CREATE TABLE [dbo].[RpiDevices] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Description] nvarchar(max)  NOT NULL
+    [Description] nvarchar(max)  NOT NULL,
+    [Version] nvarchar(max)  NOT NULL
 );
 GO
 

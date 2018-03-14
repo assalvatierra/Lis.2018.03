@@ -21,6 +21,7 @@
     <Property Name="Description" Type="String" Nullable="false" />
     <NavigationProperty Name="RpiDatalogs" Relationship="RpiDB.RpiDeviceRpiDatalog" FromRole="RpiDevice" ToRole="RpiDatalog" />
     <NavigationProperty Name="RpiControls" Relationship="RpiDB.RpiDeviceRpiControl" FromRole="RpiDevice" ToRole="RpiControl" />
+    <Property Name="Version" Type="String" Nullable="false" />
   </EntityType>
   <EntityType Name="RpiDatalog">
     <Key>
