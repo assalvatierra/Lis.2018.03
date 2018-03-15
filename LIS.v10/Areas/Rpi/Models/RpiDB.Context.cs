@@ -28,5 +28,9 @@ namespace LIS.v10.Areas.Rpi.Models
         public virtual DbSet<RpiDevice> RpiDevices { get; set; }
         public virtual DbSet<RpiDatalog> RpiDatalogs { get; set; }
         public virtual DbSet<RpiControl> RpiControls { get; set; }
+        public virtual DbSet<RpiVersion> RpiVersions { get; set; }
+        public virtual DbSet<RpiVersionMap> RpiVersionMaps { get; set; }
+        public virtual DbSet<RpiComponent> RpiComponents { get; set; }
+        public virtual DbSet<RpiDataType> RpiDataTypes { get; set; }
     }
 }

@@ -6,7 +6,7 @@
         <MappingFragment StoreEntitySet="RpiDevices">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="RpiVersionId" ColumnName="RpiVersionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -27,6 +27,44 @@
           <ScalarProperty Name="DtSchedule" ColumnName="DtSchedule" />
           <ScalarProperty Name="Data" ColumnName="Data" />
           <ScalarProperty Name="RpiDeviceId" ColumnName="RpiDeviceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RpiVersions">
+      <EntityTypeMapping TypeName="IsTypeOf(RpiDB.RpiVersion)">
+        <MappingFragment StoreEntitySet="RpiVersions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="VersionNo" ColumnName="VersionNo" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RpiVersionMaps">
+      <EntityTypeMapping TypeName="IsTypeOf(RpiDB.RpiVersionMap)">
+        <MappingFragment StoreEntitySet="RpiVersionMaps">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="NameMap" ColumnName="NameMap" />
+          <ScalarProperty Name="PinNo" ColumnName="PinNo" />
+          <ScalarProperty Name="RpiComponentId" ColumnName="RpiComponentId" />
+          <ScalarProperty Name="RpiVersionId" ColumnName="RpiVersionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RpiComponents">
+      <EntityTypeMapping TypeName="IsTypeOf(RpiDB.RpiComponent)">
+        <MappingFragment StoreEntitySet="RpiComponents">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RpiDataTypeId" ColumnName="RpiDataTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RpiDataTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(RpiDB.RpiDataType)">
+        <MappingFragment StoreEntitySet="RpiDataTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

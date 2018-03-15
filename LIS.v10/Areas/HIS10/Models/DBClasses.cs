@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -264,6 +265,82 @@ namespace LIS.v10.Areas.HIS10.Models
             var failedList = db.HisNotifications.Where(f =>failedRecipients.Contains(f.Id)).Select(f=>f.RefId);
             var failedrequest = db.HisProfileReqs.Where(q => failedList.Contains(q.Id)).ToList();
             return failedrequest;
+        }
+
+
+        //Get list of failed notification 
+        public DataSet getFailedNotification2()
+        {
+            // List<HisNotification> failedList = new List<HisNotification>();
+            List<HisProfileReq> failedreq = new List<HisProfileReq>();
+            List<int> failedreqs = new List<int>();
+
+            var failedlogs = db.HisNotificationLogs.Where(l => l.Status == "Failed");
+
+            if (failedlogs != null)
+            {
+                foreach (var logs in failedlogs)
+                {
+                    if (db.HisNotificationLogs.Where(l => l.HisNotificationRecipientId == logs.HisNotificationRecipientId).Count() > 1)
+                    {
+                        //if count is > 1
+                        //check if the request have a sent status with the same id
+                        int haveSent = db.HisNotificationLogs.Where(s => s.Status == "Sent" && s.HisNotificationRecipientId == logs.HisNotificationRecipientId).Count();
+
+                        //if the log have no sent message add to the list
+                        if (haveSent == 0)
+                        {
+                            int itemid = logs.HisNotificationRecipientId;
+                            failedreqs.Add(itemid);
+                        }
+                    }
+                    else
+                    {
+                        //if there is only one entry. add to list
+                        int itemid = logs.HisNotificationRecipientId;
+                        failedreqs.Add(itemid);
+                    }
+                }
+                //    db.HisNotificationLogs.Where(l=>l)
+            }
+
+            var failedRecipients = db.HisNotificationRecipients.Where(r => failedreqs.Contains(r.Id)).Select(r => r.HisNotificationId);
+            var failedList = db.HisNotifications.Where(f => failedRecipients.Contains(f.Id)).Select(f => f.RefId);
+            var failedrequest = db.HisProfileReqs.Where(q => failedList.Contains(q.Id)).ToList();
+
+            // List<NotifiedRequestLog> faileddetails = new List<NotifiedRequestLog>();
+
+            //to list of failed items to dataset
+            DataTable Dt = new DataTable("Table");
+
+            Dt.Columns.Add("Id", typeof(int));
+            Dt.Columns.Add("NotificationId", typeof(int));
+            Dt.Columns.Add("ContactInfo", typeof(string));
+            Dt.Columns.Add("Rectype", typeof(string));
+            Dt.Columns.Add("Message", typeof(string));
+            Dt.Columns.Add("DateSend", typeof(string));
+            Dt.Columns.Add("RefId", typeof(int));
+
+            //get details of each failed items from recipientId
+            foreach (var recipientId in failedreqs)
+            {
+                string fRecipientNum = db.HisNotificationRecipients.Where(r => r.Id == recipientId).Select(r => r.ContactInfo).FirstOrDefault();
+                string fDtSend = db.HisNotificationLogs.Where(l => l.HisNotificationRecipientId == recipientId).Select(l => l.DtSending).FirstOrDefault().ToString();
+                int notifId = db.HisNotificationRecipients.Where(r => r.Id == recipientId).Select(r => r.HisNotificationId).FirstOrDefault();
+                string fMessage = db.HisNotifications.Where(n => n.Id == notifId).Select(n => n.Message).FirstOrDefault();
+                int fnotifId = db.HisNotifications.Where(n => n.Id == notifId).Select(n => n.Id).FirstOrDefault();
+                string fRecType = db.HisNotifications.Where(n => n.Id == notifId).Select(n => n.RecType).FirstOrDefault();
+                int fRefId = (int)db.HisNotifications.Where(n => n.Id == notifId).Select(n => n.RefId).FirstOrDefault();
+
+                Dt.Rows.Add(recipientId, notifId, fRecipientNum, fRecType, fMessage, fDtSend,fRefId);
+
+            }
+            
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(Dt);
+            ds.DataSetName = "Table";
+            return ds;
         }
 
 

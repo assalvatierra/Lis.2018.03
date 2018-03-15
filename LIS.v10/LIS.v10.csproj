@@ -372,10 +372,16 @@
     <Compile Include="Areas\HIS10\Models\HisTemplateRequest.cs">
       <DependentUpon>His10DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Rpi\Models\RpiComponent.cs">
+      <DependentUpon>RpiDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Rpi\Models\RpiControl.cs">
       <DependentUpon>RpiDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Rpi\Models\RpiDatalog.cs">
+      <DependentUpon>RpiDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Rpi\Models\RpiDataType.cs">
       <DependentUpon>RpiDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Rpi\Models\RpiDB.Context.cs">
@@ -394,6 +400,12 @@
       <DependentUpon>RpiDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Areas\Rpi\Models\RpiDevice.cs">
+      <DependentUpon>RpiDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Rpi\Models\RpiVersion.cs">
+      <DependentUpon>RpiDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Rpi\Models\RpiVersionMap.cs">
       <DependentUpon>RpiDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Rpi\RpiAreaRegistration.cs" />

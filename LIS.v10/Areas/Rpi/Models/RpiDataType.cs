@@ -12,23 +12,18 @@ namespace LIS.v10.Areas.Rpi.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RpiDevice
+    public partial class RpiDataType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RpiDevice()
+        public RpiDataType()
         {
-            this.RpiDatalogs = new HashSet<RpiDatalog>();
-            this.RpiControls = new HashSet<RpiControl>();
+            this.RpiComponents = new HashSet<RpiComponent>();
         }
     
         public int Id { get; set; }
         public string Description { get; set; }
-        public int RpiVersionId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RpiDatalog> RpiDatalogs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RpiControl> RpiControls { get; set; }
-        public virtual RpiVersion RpiVersion { get; set; }
+        public virtual ICollection<RpiComponent> RpiComponents { get; set; }
     }
 }

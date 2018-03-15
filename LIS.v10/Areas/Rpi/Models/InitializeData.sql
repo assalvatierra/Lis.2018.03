@@ -1,5 +1,8 @@
-﻿insert into RpiDevices([Description],[Version])
-values('LIS Rpi','v1');
+﻿insert into RpiVersions([VersionNo],[Description])
+values('v10','LIS Rpi');
+
+insert into RpiDevices([Description],[RpiVersionId])
+values('LIS Rpi',1);
 
 insert into RpiControls([DtSchedule],[Data],[RpiDeviceId])
 values('3/13/2018 12:00:00','{Temp:0,Humidity:0,Light:0,Fan:0,Water:0}',1);

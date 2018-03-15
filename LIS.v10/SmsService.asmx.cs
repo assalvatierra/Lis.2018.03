@@ -168,7 +168,7 @@ namespace LIS.v10
         }
 
        
-        //get list of unsent items 
+        //1. get list of unsent items 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void getUnsentItems()
@@ -203,6 +203,7 @@ namespace LIS.v10
                     "WHERE HisNotificationRecipients.Id IN "+
                     "(SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs "+
                     "WHERE HisNotificationLogs.Status = 'Failed')";
+
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
             DataSet ds = new DataSet();
@@ -212,27 +213,8 @@ namespace LIS.v10
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
         }
 
-        ////get list of unsent items 
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void getFailedItem2()
-        {
-            db1.getFailedNotification();
-            string sql = "SELECT * FROM HisNotificationRecipients INNER JOIN HisNotifications " +
-                    "ON HisNotifications.Id = HisNotificationRecipients.HisNotificationId " +
-                    "WHERE HisNotificationRecipients.Id IN " +
-                    "(SELECT HisNotificationLogs.HisNotificationRecipientId FROM HisNotificationLogs " +
-                    "WHERE HisNotificationLogs.Status = 'Failed')";
-            SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
 
-            DataSet ds = new DataSet();
-            da.Fill(ds);    //execute sqlAdapter
-
-            Context.Response.Clear();
-            Context.Response.ContentType = "application/json";
-            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
-        }
-
+        //2. get list of failed
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void getListsofFailed(string notificationRecipientID)
@@ -249,6 +231,24 @@ namespace LIS.v10
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
 
         }
+
+        // getFailedNotification - must return
+        //2. get list of failed
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void getFailedNotif()
+        {
+            
+            // string sql = "SELECT * FROM HisNotificationLogs WHERE Status = 'Failed' AND HisNotificationRecipientID = " + notificationRecipientID;
+            //SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
+            //db1.getFailedNotification2();
+
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(db1.getFailedNotification2(), Newtonsoft.Json.Formatting.Indented));
+
+        }
+
 
 
         [WebMethod]
@@ -272,6 +272,7 @@ namespace LIS.v10
 
 
         //-- RasperryPi Methods --//
+        #region rpi methods
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
        public void rpi_getDevice(int deviceId)
@@ -365,6 +366,6 @@ namespace LIS.v10
             Context.Response.Clear();
             Context.Response.Write("200");
         }
-
+        #endregion
     }
 }
