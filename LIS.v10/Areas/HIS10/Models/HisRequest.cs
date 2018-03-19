@@ -18,7 +18,7 @@ namespace LIS.v10.Areas.HIS10.Models
         public HisRequest()
         {
             this.HisProfileReqs = new HashSet<HisProfileReq>();
-            this.HisTemplateReqItems = new HashSet<HisTemplateReqItems>();
+            this.HisTemplateReqItems = new HashSet<HisTemplateReqItem>();
             this.HisReqCats = new HashSet<HisReqCat>();
         }
     
@@ -29,7 +29,7 @@ namespace LIS.v10.Areas.HIS10.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HisProfileReq> HisProfileReqs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HisTemplateReqItems> HisTemplateReqItems { get; set; }
+        public virtual ICollection<HisTemplateReqItem> HisTemplateReqItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HisReqCat> HisReqCats { get; set; }
     }

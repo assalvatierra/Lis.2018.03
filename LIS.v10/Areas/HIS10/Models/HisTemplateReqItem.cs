@@ -12,19 +12,18 @@ namespace LIS.v10.Areas.HIS10.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class HisTemplateRequest
+    public partial class HisTemplateReqItem
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HisTemplateRequest()
-        {
-            this.HisTemplateReqItems = new HashSet<HisTemplateReqItem>();
-        }
-    
         public int Id { get; set; }
-        public string Title { get; set; }
+        public int HisTemplateRequestId { get; set; }
+        public int HisRequestId { get; set; }
         public string Remarks { get; set; }
+        public int Sort { get; set; }
+        public Nullable<int> RefDay { get; set; }
+        public Nullable<int> RefHour { get; set; }
+        public string SchedTime { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HisTemplateReqItem> HisTemplateReqItems { get; set; }
+        public virtual HisTemplateRequest HisTemplateRequest { get; set; }
+        public virtual HisRequest HisRequest { get; set; }
     }
 }

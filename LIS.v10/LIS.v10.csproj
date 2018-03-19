@@ -366,7 +366,7 @@
     <Compile Include="Areas\HIS10\Models\HisSpecialization.cs">
       <DependentUpon>His10DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\HIS10\Models\HisTemplateReqItems.cs">
+    <Compile Include="Areas\HIS10\Models\HisTemplateReqItem.cs">
       <DependentUpon>His10DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\HIS10\Models\HisTemplateRequest.cs">
@@ -474,6 +474,7 @@
     </Content>
     <Content Include="Areas\HIS10\Models\InitializeData.sql" />
     <Content Include="Areas\HIS10\Models\20170620.AddPhysicianSpecialization.and.Clinics.sql" />
+    <Content Include="Areas\HIS10\Models\InitRequestTemplate.sql" />
     <Content Include="Areas\Rpi\Models\InitializeData.sql" />
     <Content Include="Areas\Rpi\Models\RpiDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
