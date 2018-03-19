@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/07/2018 09:12:18
--- Generated from EDMX file: D:\Data\Real\Apps\GitHub\Lis\LIS.v10\LIS.v10\Areas\HIS10\Models\His10DB.edmx
+-- Date Created: 03/19/2018 13:59:16
+-- Generated from EDMX file: C:\Data\ABEL\Projects\GitHubApps\Lis.2018.03\LIS.v10\Areas\HIS10\Models\His10DB.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -512,13 +512,16 @@ CREATE TABLE [dbo].[HisTemplateRequests] (
 );
 GO
 
--- Creating table 'HisTemplateReqItems1'
-CREATE TABLE [dbo].[HisTemplateReqItems1] (
+-- Creating table 'HisTemplateReqItems'
+CREATE TABLE [dbo].[HisTemplateReqItems] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [HisTemplateRequestId] int  NOT NULL,
     [HisRequestId] int  NOT NULL,
+    [Remarks] nvarchar(250)  NULL,
     [Sort] int  NOT NULL,
-    [RefDay] int  NOT NULL
+    [RefDay] int  NULL,
+    [RefHour] int  NULL,
+    [SchedTime] nvarchar(30)  NULL
 );
 GO
 
@@ -739,9 +742,9 @@ ADD CONSTRAINT [PK_HisTemplateRequests]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'HisTemplateReqItems1'
-ALTER TABLE [dbo].[HisTemplateReqItems1]
-ADD CONSTRAINT [PK_HisTemplateReqItems1]
+-- Creating primary key on [Id] in table 'HisTemplateReqItems'
+ALTER TABLE [dbo].[HisTemplateReqItems]
+ADD CONSTRAINT [PK_HisTemplateReqItems]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1214,8 +1217,8 @@ ON [dbo].[HisProfileReqs]
     ([HisRequestId]);
 GO
 
--- Creating foreign key on [HisTemplateRequestId] in table 'HisTemplateReqItems1'
-ALTER TABLE [dbo].[HisTemplateReqItems1]
+-- Creating foreign key on [HisTemplateRequestId] in table 'HisTemplateReqItems'
+ALTER TABLE [dbo].[HisTemplateReqItems]
 ADD CONSTRAINT [FK_HisTemplateRequestHisTemplateReqItems]
     FOREIGN KEY ([HisTemplateRequestId])
     REFERENCES [dbo].[HisTemplateRequests]
@@ -1225,12 +1228,12 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_HisTemplateRequestHisTemplateReqItems'
 CREATE INDEX [IX_FK_HisTemplateRequestHisTemplateReqItems]
-ON [dbo].[HisTemplateReqItems1]
+ON [dbo].[HisTemplateReqItems]
     ([HisTemplateRequestId]);
 GO
 
--- Creating foreign key on [HisRequestId] in table 'HisTemplateReqItems1'
-ALTER TABLE [dbo].[HisTemplateReqItems1]
+-- Creating foreign key on [HisRequestId] in table 'HisTemplateReqItems'
+ALTER TABLE [dbo].[HisTemplateReqItems]
 ADD CONSTRAINT [FK_HisRequestHisTemplateReqItems]
     FOREIGN KEY ([HisRequestId])
     REFERENCES [dbo].[HisRequests]
@@ -1240,7 +1243,7 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_HisRequestHisTemplateReqItems'
 CREATE INDEX [IX_FK_HisRequestHisTemplateReqItems]
-ON [dbo].[HisTemplateReqItems1]
+ON [dbo].[HisTemplateReqItems]
     ([HisRequestId]);
 GO
 

@@ -29,7 +29,7 @@
     <EntitySet Name="HisRequests" EntityType="His10DB.Store.HisRequests" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HisProfileReqs" EntityType="His10DB.Store.HisProfileReqs" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HisTemplateRequests" EntityType="His10DB.Store.HisTemplateRequests" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="HisTemplateReqItems1" EntityType="His10DB.Store.HisTemplateReqItems1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HisTemplateReqItems" EntityType="His10DB.Store.HisTemplateReqItems" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HisReqCategories" EntityType="His10DB.Store.HisReqCategories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HisReqCats" EntityType="His10DB.Store.HisReqCats" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HisNotifications" EntityType="His10DB.Store.HisNotifications" store:Type="Tables" Schema="dbo" />
@@ -153,11 +153,11 @@
     </AssociationSet>
     <AssociationSet Name="HisTemplateRequestHisTemplateReqItems" Association="His10DB.Store.HisTemplateRequestHisTemplateReqItems">
       <End Role="HisTemplateRequest" EntitySet="HisTemplateRequests" />
-      <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems1" />
+      <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems" />
     </AssociationSet>
     <AssociationSet Name="HisRequestHisTemplateReqItems" Association="His10DB.Store.HisRequestHisTemplateReqItems">
       <End Role="HisRequest" EntitySet="HisRequests" />
-      <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems1" />
+      <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems" />
     </AssociationSet>
     <AssociationSet Name="HisReqCategoryHisReqCat" Association="His10DB.Store.HisReqCategoryHisReqCat">
       <End Role="HisReqCategory" EntitySet="HisReqCategories" />
@@ -456,15 +456,18 @@
     <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="80" />
     <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="250" />
   </EntityType>
-  <EntityType Name="HisTemplateReqItems1">
+  <EntityType Name="HisTemplateReqItems">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="HisTemplateRequestId" Type="int" Nullable="false" />
     <Property Name="HisRequestId" Type="int" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="250" />
     <Property Name="Sort" Type="int" Nullable="false" />
-    <Property Name="RefDay" Type="int" Nullable="false" />
+    <Property Name="RefDay" Type="int" Nullable="true" />
+    <Property Name="RefHour" Type="int" Nullable="true" />
+    <Property Name="SchedTime" Type="nvarchar" Nullable="true" MaxLength="30" />
   </EntityType>
   <EntityType Name="HisReqCategories">
     <Key>
@@ -861,7 +864,7 @@
   </Association>
   <Association Name="HisTemplateRequestHisTemplateReqItems">
     <End Role="HisTemplateRequest" Type="His10DB.Store.HisTemplateRequests" Multiplicity="1" />
-    <End Role="HisTemplateReqItems" Type="His10DB.Store.HisTemplateReqItems1" Multiplicity="*" />
+    <End Role="HisTemplateReqItems" Type="His10DB.Store.HisTemplateReqItems" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="HisTemplateRequest">
         <PropertyRef Name="Id" />
@@ -873,7 +876,7 @@
   </Association>
   <Association Name="HisRequestHisTemplateReqItems">
     <End Role="HisRequest" Type="His10DB.Store.HisRequests" Multiplicity="1" />
-    <End Role="HisTemplateReqItems" Type="His10DB.Store.HisTemplateReqItems1" Multiplicity="*" />
+    <End Role="HisTemplateReqItems" Type="His10DB.Store.HisTemplateReqItems" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="HisRequest">
         <PropertyRef Name="Id" />

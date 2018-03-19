@@ -5,9 +5,9 @@ values
 ('21 Days - Thunderbird','21 days conditioning - ThunderBird Power');
 
 insert into HisRequests([Title],[Description])
-('Gamefowl Conditioning','Gamefowl Conditioning program');
+values ('Gamefowl Conditioning','Gamefowl Conditioning program');
 
-insert into HisTemplateReqItem([HisTemplateRequestId],[HisRequestId],[Description],[Sort],[RefDay],[RefHour],[SchedTime])
+insert into HisTemplateReqItems([HisTemplateRequestId],[HisRequestId],[Remarks],[Sort],[RefDay],[RefHour],[SchedTime])
 values
 -- 7 days supplement conditioning --
 -- ref: http://gamefowl101.blogspot.com/2013/09/tatak-excellence-7-days-conditioning.html --

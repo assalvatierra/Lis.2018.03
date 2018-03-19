@@ -19,28 +19,7 @@ namespace LIS.v10.Areas.HIS10.Models
         {
             this.HisNotificationRecipients = new HashSet<HisNotificationRecipient>();
         }
-
-        public HisNotification(int id, string recType, string recipient, DateTime dtSending, int? refId, string refTable)
-        {
-            Id = id;
-            RecType = recType;
-            Recipient = recipient;
-            DtSending = dtSending;
-            RefId = refId;
-            RefTable = refTable;
-        }
-
-        public HisNotification(int id, string recType, string recipient, string message, DateTime dtSending, int? refId, string refTable)
-        {
-            Id = id;
-            RecType = recType;
-            Recipient = recipient;
-            Message = message;
-            DtSending = dtSending;
-            RefId = refId;
-            RefTable = refTable;
-        }
-
+    
         public int Id { get; set; }
         public string RecType { get; set; }
         public string Recipient { get; set; }
