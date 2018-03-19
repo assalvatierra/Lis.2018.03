@@ -62,8 +62,8 @@
         <EntityTypeShape EntityType="His10DB.HisProfileReq" Width="1.5" PointX="22.25" PointY="3.25" />
         <AssociationConnector Association="His10DB.HisProfileHisProfileReq" />
         <AssociationConnector Association="His10DB.HisRequestHisProfileReq" />
-        <EntityTypeShape EntityType="His10DB.HisTemplateRequest" Width="1.5" PointX="27.25" PointY="7.125" />
-        <EntityTypeShape EntityType="His10DB.HisTemplateReqItems" Width="1.5" PointX="25" PointY="7.125" />
+        <EntityTypeShape EntityType="His10DB.HisTemplateRequest" Width="1.5" PointX="24.75" PointY="8.625" />
+        <EntityTypeShape EntityType="His10DB.HisTemplateReqItem" Width="1.5" PointX="22.375" PointY="7.5" />
         <AssociationConnector Association="His10DB.HisTemplateRequestHisTemplateReqItems" />
         <AssociationConnector Association="His10DB.HisRequestHisTemplateReqItems" />
         <EntityTypeShape EntityType="His10DB.HisReqCategory" Width="1.5" PointX="29.375" PointY="5" />

@@ -1109,14 +1109,14 @@
             <End Role="HisProfileReq" EntitySet="HisProfileReqs" />
           </AssociationSet>
           <EntitySet Name="HisTemplateRequests" EntityType="His10DB.HisTemplateRequest" />
-          <EntitySet Name="HisTemplateReqItems1" EntityType="His10DB.HisTemplateReqItems" />
+          <EntitySet Name="HisTemplateReqItems" EntityType="His10DB.HisTemplateReqItem" />
           <AssociationSet Name="HisTemplateRequestHisTemplateReqItems" Association="His10DB.HisTemplateRequestHisTemplateReqItems">
             <End Role="HisTemplateRequest" EntitySet="HisTemplateRequests" />
-            <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems1" />
+            <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems" />
           </AssociationSet>
           <AssociationSet Name="HisRequestHisTemplateReqItems" Association="His10DB.HisRequestHisTemplateReqItems">
             <End Role="HisRequest" EntitySet="HisRequests" />
-            <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems1" />
+            <End Role="HisTemplateReqItems" EntitySet="HisTemplateReqItems" />
           </AssociationSet>
           <EntitySet Name="HisReqCategories" EntityType="His10DB.HisReqCategory" />
           <EntitySet Name="HisReqCats" EntityType="His10DB.HisReqCat" />
@@ -1833,7 +1833,7 @@
           <NavigationProperty Name="HisTemplateReqItems" Relationship="His10DB.HisTemplateRequestHisTemplateReqItems" FromRole="HisTemplateRequest" ToRole="HisTemplateReqItems" />
           <Property Name="Remarks" Type="String" Nullable="true" MaxLength="250" />
         </EntityType>
-        <EntityType Name="HisTemplateReqItems">
+        <EntityType Name="HisTemplateReqItem">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -1842,12 +1842,15 @@
           <Property Name="HisTemplateRequestId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="HisRequest" Relationship="His10DB.HisRequestHisTemplateReqItems" FromRole="HisTemplateReqItems" ToRole="HisRequest" />
           <Property Name="HisRequestId" Type="Int32" Nullable="false" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="250" />
           <Property Name="Sort" Type="Int32" Nullable="false" />
-          <Property Name="RefDay" Type="Int32" Nullable="false" />
+          <Property Name="RefDay" Type="Int32" Nullable="true" />
+          <Property Name="RefHour" Type="Int32" Nullable="true" />
+          <Property Name="SchedTime" Type="String" Nullable="true" MaxLength="30" />
         </EntityType>
         <Association Name="HisTemplateRequestHisTemplateReqItems">
           <End Type="His10DB.HisTemplateRequest" Role="HisTemplateRequest" Multiplicity="1" />
-          <End Type="His10DB.HisTemplateReqItems" Role="HisTemplateReqItems" Multiplicity="*" />
+          <End Type="His10DB.HisTemplateReqItem" Role="HisTemplateReqItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HisTemplateRequest">
               <PropertyRef Name="Id" />
@@ -1859,7 +1862,7 @@
         </Association>
         <Association Name="HisRequestHisTemplateReqItems">
           <End Type="His10DB.HisRequest" Role="HisRequest" Multiplicity="1" />
-          <End Type="His10DB.HisTemplateReqItems" Role="HisTemplateReqItems" Multiplicity="*" />
+          <End Type="His10DB.HisTemplateReqItem" Role="HisTemplateReqItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HisRequest">
               <PropertyRef Name="Id" />
@@ -2299,8 +2302,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="HisTemplateReqItems1">
-      <EntityTypeMapping TypeName="IsTypeOf(His10DB.HisTemplateReqItems)">
+    <EntitySetMapping Name="HisTemplateReqItems">
+      <EntityTypeMapping TypeName="IsTypeOf(His10DB.HisTemplateReqItem)">
         <MappingFragment StoreEntitySet="HisTemplateReqItems1">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="HisTemplateRequestId" ColumnName="HisTemplateRequestId" />
