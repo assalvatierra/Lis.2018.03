@@ -318,7 +318,7 @@ namespace LIS.v10.Areas.HIS10.Models
             Dt.Columns.Add("ContactInfo", typeof(string));
             Dt.Columns.Add("Rectype", typeof(string));
             Dt.Columns.Add("Message", typeof(string));
-            Dt.Columns.Add("DateSend", typeof(string));
+            Dt.Columns.Add("DtSending", typeof(string));
             Dt.Columns.Add("RefId", typeof(int));
 
             //get details of each failed items from recipientId

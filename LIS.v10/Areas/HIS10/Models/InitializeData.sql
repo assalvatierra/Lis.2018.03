@@ -57,14 +57,14 @@ values (1,1,'3/1/2018 10:00:00','3/6/2018 10:36:00','3/6/2018 10:36:00','Initial
 
 insert into HisNotifications ([RecType],[Recipient],[Message],[DtSending],[RefId],[RefTable])
 values ('Client','0','Test Message','3/6/2018 10:36:00',1,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','3/6/2018 9:36:00',2,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','3/6/2018 15:36:00',3,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','3/6/2018 17:36:00',4,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',5,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',6,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',7,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',8,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION For: Batch0301A Request: Vacc 101 none Scheduled: 3/9/2018 10:00:00 AM By: Dr Apple Assisted By: Yeng Guiao ','',9,'HisProfileReqs');
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','3/6/2018 9:36:00',2,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','3/6/2018 15:36:00',3,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','3/6/2018 17:36:00',4,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','',5,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','',6,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','',7,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','',8,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION \n\r For: Batch0301A \n\r Request: Vacc 101 none \n\r Scheduled: 3/9/2018 10:00:00 AM \n\r By: Dr Apple Assisted \n\r By: Yeng Guiao ','',9,'HisProfileReqs');
 
 
 insert into HisNotificationRecipients ([HisNotificationId],[ContactInfo])
