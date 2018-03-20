@@ -188,20 +188,51 @@ namespace LIS.v10.Areas.HIS10.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,HisProfileId,HisRequestId,dtRequested,dtSchedule,dtPerformed,Remarks,HisPhysicianId,HisInchargeId")] HisProfileReq hisProfileReq)
+        public ActionResult Create([Bind(Include = "Id,HisProfileId,HisRequestId,dtRequested,dtSchedule,dtPerformed,Remarks,HisPhysicianId,HisInchargeId")] HisProfileReq hisProfileReq, string AddRequest)
         {
-            if (ModelState.IsValid)
+            if (AddRequest == "Create")
             {
-                db.HisProfileReqs.Add(hisProfileReq);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.HisProfileReqs.Add(hisProfileReq);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name", hisProfileReq.HisProfileId);
+                ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title", hisProfileReq.HisRequestId);
+                ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name");
+                ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name");
             }
 
-            ViewBag.HisProfileId = new SelectList(db.HisProfiles, "Id", "Name", hisProfileReq.HisProfileId);
-            ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title", hisProfileReq.HisRequestId);
-            ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name");
-            ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name");
+            if (AddRequest == "Template")
+            {
+                Session["CreateRequestHdr"] = hisProfileReq;
+                return RedirectToAction("TemplateList");
+            }
+
             return View(hisProfileReq);
+        }
+
+
+        public ActionResult TemplateList()
+        {
+            return View(db.HisTemplateRequests);
+        }
+
+        public ActionResult UseTemplate(int? Id)
+        {
+            Models.HisProfileReq hisProfileReq = (HisProfileReq) Session["CreateRequestHdr"];
+
+            // TO-DO: add template details to profile requests
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult TemplateDetails(int? Id)
+        {
+            ViewBag.TemplateId = (int)Id;
+            return View(db.HisTemplateReqItems.Where(d => d.HisTemplateRequestId == (int)Id));
         }
 
         // GET: HIS10/HisProfileReqs/Edit/5
