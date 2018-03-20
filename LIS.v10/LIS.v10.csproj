@@ -651,6 +651,8 @@
     <Content Include="Areas\Rpi\Models\RpiDB.edmx.diagram">
       <DependentUpon>RpiDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\HIS10\Views\HisProfileReqs\TemplateList.cshtml" />
+    <Content Include="Areas\HIS10\Views\HisProfileReqs\TemplateDetails.cshtml" />
     <None Include="Properties\PublishProfiles\Lis2018.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -735,7 +737,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63556</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63556/</IISUrl>
+          <IISUrl>http://localhost:63557/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
