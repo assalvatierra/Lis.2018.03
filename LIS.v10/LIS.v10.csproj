@@ -657,10 +657,8 @@
     <Content Include="Areas\Rpi\Models\RpiDB.edmx.diagram">
       <DependentUpon>RpiDB.edmx</DependentUpon>
     </Content>
-<<<<<<< HEAD
     <Content Include="Areas\HIS10\Views\HisProfileReqs\TemplateList.cshtml" />
     <Content Include="Areas\HIS10\Views\HisProfileReqs\TemplateDetails.cshtml" />
-=======
     <Content Include="Areas\Rpi\Views\RpiDevices\Create.cshtml" />
     <Content Include="Areas\Rpi\Views\RpiDevices\Delete.cshtml" />
     <Content Include="Areas\Rpi\Views\RpiDevices\Details.cshtml" />
@@ -688,7 +686,6 @@
     <Content Include="Areas\Rpi\Views\RpiVersions\Index.cshtml" />
     <Content Include="Areas\Rpi\Views\RpiDatalogs\LogDetails.cshtml" />
     <Content Include="Areas\Rpi\Views\RpiDevices\PartialView_components.cshtml" />
->>>>>>> origin/master
     <None Include="Properties\PublishProfiles\Lis2018.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
