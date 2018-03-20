@@ -277,10 +277,8 @@ namespace LIS.v10
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
        public void rpi_getDevice(int deviceId)
         {
-            //RpiDevice device = rpidb.RpiDevices.Where(r=>r.Id == id).FirstOrDefault();
-            //RpiDevice device = rpidb.RpiDevices.Find(id);
             string sql = "SELECT * FROM [aspnet-LIS.v10-20170509105835].[dbo].[RpiDevices] WHERE [Id] = " + deviceId;
-            // string sql = rpidb.RpiDevices.Find(id).ToString();
+
             SqlDataAdapter da = new SqlDataAdapter(sql, ConfigurationManager.ConnectionStrings["SmsConnection"].ToString());
             DataSet ds = new DataSet();
 
@@ -331,6 +329,44 @@ namespace LIS.v10
             DataSet ds = new DataSet();
 
             da.Fill(ds);    //execute sqlAdapter
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
+        [WebMethod]
+        public void rpi_getVersionMap(int VersionId)
+        {
+            var versionMap = rpidb.RpiVersionMaps.Where(m => m.RpiVersionId == VersionId).ToList();
+
+            DataTable Dt = new DataTable("Table");
+
+            Dt.Columns.Add("Id", typeof(int));
+            Dt.Columns.Add("VersionId", typeof(int));
+            Dt.Columns.Add("NameMap", typeof(string));
+            Dt.Columns.Add("ComponentName", typeof(string));
+            Dt.Columns.Add("PinNo", typeof(int));
+
+            //get details of each failed items from recipientId
+            foreach (var map in versionMap)
+            {
+                var compDetails = rpidb.RpiComponents.Where(c => c.Id == map.RpiComponentId).FirstOrDefault();
+
+                int Id = compDetails.Id; //component id  
+                int versionId = map.RpiVersionId;
+                string nameMap = map.NameMap;
+                string componentName = compDetails.ComponentName;
+                string pinNo = map.PinNo;
+
+
+                Dt.Rows.Add(Id, versionId, nameMap, componentName, pinNo);
+
+            }
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(Dt);
+            ds.DataSetName = "Table";
+
             Context.Response.Clear();
             Context.Response.ContentType = "application/json";
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));

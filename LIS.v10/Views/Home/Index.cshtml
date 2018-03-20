@@ -157,6 +157,21 @@
             </div>
         }
 
+        if ((ViewBag.PageType == "ADMIN")
+        && ((ViewBag.AppCode == "AC2018") || (ViewBag.AppCode == "LAB2018")))
+        {
+            <div class="col-md-4">
+                <h2>Raspberry Pi</h2>
+                <p>Raspberry pi data logs and config</p>
+                <p>
+                    @*@Html.ActionLink("Version List", "Index", "RpiVersions", new { area = "Rpi" }, new { @class = "btn btn-default" })*@
+                    @Html.ActionLink("Device List", "Index", "RpiDevices", new { area = "Rpi" }, new { @class = "btn btn-default" })
+                   @* @Html.ActionLink("Control Schedule", "Index", "RpiDevices", new { area = "Rpi" }, new { @class = "btn btn-default" })*@
+                </p>
+            </div>
+        }
+
+
         if (ViewBag.PageType == "THERAPHY")
         {
             <div class="col-md-4">

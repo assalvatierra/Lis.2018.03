@@ -2,15 +2,15 @@
 values('v10','LIS Rpi');
 
 insert into RpiDataTypes([Description])
-values('Temperature'), 
-	  ('Humidity'), 
-	  ('Units');
+values('Temperature'), ('Humidity'), 
+	  ('Lumens'), ('Units');
 
-insert into RpiComponents([ComponentName],[Description],[RpiDataType])
-values('DS110','Temp and Humidity Sensor',1);
+insert into RpiComponents([ComponentName],[Description],[RpiDataTypeId])
+values('DHT22','Temp and Humidity Sensor',1),
+	  ('LED','Light',3);
 
 insert into RpiVersionMaps([NameMap],[PinNo],[RpiComponentId],[RpiVersionId])
-values('v10Map',18,1,1);
+values('v10Map',18,1,1), ('v10Map',23,2,1);
 
 
 insert into RpiDevices([Description],[RpiVersionId])
