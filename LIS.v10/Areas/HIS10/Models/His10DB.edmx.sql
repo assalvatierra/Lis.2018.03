@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/19/2018 13:59:16
--- Generated from EDMX file: C:\Data\ABEL\Projects\GitHubApps\Lis.2018.03\LIS.v10\Areas\HIS10\Models\His10DB.edmx
+-- Date Created: 03/20/2018 12:14:09
+-- Generated from EDMX file: D:\Data\Real\Apps\GitHub\Lis.2018.03\Lis.2018.03\LIS.v10\Areas\HIS10\Models\His10DB.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -105,10 +105,10 @@ IF OBJECT_ID(N'[dbo].[FK_HisRequestHisProfileReq]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[HisProfileReqs] DROP CONSTRAINT [FK_HisRequestHisProfileReq];
 GO
 IF OBJECT_ID(N'[dbo].[FK_HisTemplateRequestHisTemplateReqItems]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HisTemplateReqItems1] DROP CONSTRAINT [FK_HisTemplateRequestHisTemplateReqItems];
+    ALTER TABLE [dbo].[HisTemplateReqItems] DROP CONSTRAINT [FK_HisTemplateRequestHisTemplateReqItems];
 GO
 IF OBJECT_ID(N'[dbo].[FK_HisRequestHisTemplateReqItems]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[HisTemplateReqItems1] DROP CONSTRAINT [FK_HisRequestHisTemplateReqItems];
+    ALTER TABLE [dbo].[HisTemplateReqItems] DROP CONSTRAINT [FK_HisRequestHisTemplateReqItems];
 GO
 IF OBJECT_ID(N'[dbo].[FK_HisReqCategoryHisReqCat]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[HisReqCats] DROP CONSTRAINT [FK_HisReqCategoryHisReqCat];
@@ -217,8 +217,8 @@ GO
 IF OBJECT_ID(N'[dbo].[HisTemplateRequests]', 'U') IS NOT NULL
     DROP TABLE [dbo].[HisTemplateRequests];
 GO
-IF OBJECT_ID(N'[dbo].[HisTemplateReqItems1]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[HisTemplateReqItems1];
+IF OBJECT_ID(N'[dbo].[HisTemplateReqItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HisTemplateReqItems];
 GO
 IF OBJECT_ID(N'[dbo].[HisReqCategories]', 'U') IS NOT NULL
     DROP TABLE [dbo].[HisReqCategories];
