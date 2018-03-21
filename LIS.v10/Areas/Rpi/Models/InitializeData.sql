@@ -17,7 +17,7 @@ insert into RpiDevices([Description],[RpiVersionId])
 values('LIS Rpi',1);
 
 insert into RpiControls([DtSchedule],[Data],[RpiDeviceId])
-values('3/13/2018 12:00:00','{Temp:0,Humidity:0,Light:0,Fan:0,Water:0}',1);
+values('3/21/2018 15:00:00','{"TempMin":20,"TempMax":28,"Light":0,"Socket01":0,"Socket02":0}',1);
 
 insert into RpiDatalogs([DtRead],[DataRead],[RpiDeviceId])
 	values('3/13/2018 12:00:00','{"Temp":34.1,"Humidity":50,"Light":0,"Fan":0,"Water":0}',1),

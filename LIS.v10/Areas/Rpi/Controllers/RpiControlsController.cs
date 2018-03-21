@@ -15,10 +15,10 @@ namespace LIS.v10.Areas.Rpi.Controllers
         private RpiDBContainer1 db = new RpiDBContainer1();
 
         // GET: Rpi/RpiControls
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             var rpiControls = db.RpiControls.Include(r => r.RpiDevice);
-            return View(rpiControls.ToList());
+            return View(rpiControls.Where(r=>r.RpiDeviceId == id).ToList());
         }
 
         // GET: Rpi/RpiControls/Details/5

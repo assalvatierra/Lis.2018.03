@@ -35,6 +35,9 @@
         <td >
             @Html.ActionLink("View Logs", "LogDetails", "RpiDatalogs",new { id = item.Id },null) 
         </td>
+        <td>
+            @Html.ActionLink("Settings", "Index", "RpiControls", new { id = item.Id }, null)
+        </td>
 
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

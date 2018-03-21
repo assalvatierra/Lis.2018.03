@@ -37,16 +37,19 @@ namespace LIS.v10.Areas.HIS10.Controllers
                 Session["RPTSTATUS"] = status;
 
             var hisProfileReqs = db.HisProfileReqs.Include(h => h.HisProfile).Include(h => h.HisRequest);
-            if(RptType==1) //All requests
-                hisProfileReqs = hisProfileReqs.OrderBy(d => d.dtRequested);
+            if (RptType==1) //All requests
+                hisProfileReqs = hisProfileReqs.Where(d => d.HisRequestId != 6).OrderBy(d => d.dtRequested);
             if (RptType == 2) //By Schedule
-                hisProfileReqs = hisProfileReqs.OrderBy(d => d.dtSchedule);
+                hisProfileReqs = hisProfileReqs.Where(d => d.HisRequestId != 6).OrderBy(d => d.dtSchedule);
             if (RptType == 3) //By Item
-                hisProfileReqs = hisProfileReqs.OrderBy(d => d.HisProfileId);
+                hisProfileReqs = hisProfileReqs.Where(d => d.HisRequestId != 6).OrderBy(d => d.HisProfileId);
             if (RptType == 4) //By Latest Entries
-                 hisProfileReqs = hisProfileReqs.Where(r=> r.dtRequested > baseTime).OrderBy(d => d.dtRequested); //7 days
+                 hisProfileReqs = hisProfileReqs.Where(r=> r.dtRequested > baseTime && r.HisRequestId != 6).OrderBy(d => d.dtRequested); //7 days
             if (RptType == 5) //By Latest Requests Done
-                hisProfileReqs = hisProfileReqs.Where(r => r.dtRequested > baseTime && r.dtPerformed != null).OrderBy(d => d.dtRequested);
+                hisProfileReqs = hisProfileReqs.Where(r => r.dtRequested > baseTime && r.HisRequestId != 6 && r.dtPerformed != null).OrderBy(d => d.dtRequested);
+            if (RptType == 6) //By Schedule
+                hisProfileReqs = hisProfileReqs.Where(d=>d.HisRequestId == 6).OrderBy(d => d.dtRequested);
+
             return View(hisProfileReqs.ToList());
         }
 
@@ -234,14 +237,14 @@ namespace LIS.v10.Areas.HIS10.Controllers
             foreach (var tempDetails in template)
             {
                 requestList.Add(new HisProfileReq() {
-                    HisProfileId = hisProfileReq.HisProfileId,
-                    HisRequestId = hisProfileReq.HisRequestId,
-                    dtRequested  = hisProfileReq.dtRequested,
-                    dtSchedule   = DateTime.Parse(hisProfileReq.dtSchedule.ToString()).AddDays((int)tempDetails.RefDay),
-                    dtPerformed  = hisProfileReq.dtPerformed,
-                    Remarks      = tempDetails.Remarks,
+                    HisProfileId   = hisProfileReq.HisProfileId,
+                    HisRequestId   = tempDetails.HisRequestId,
+                    dtRequested    = hisProfileReq.dtRequested,
+                    dtSchedule     = DateTime.Parse(hisProfileReq.dtSchedule.ToString()).AddDays((int)tempDetails.RefDay),
+                    dtPerformed    = hisProfileReq.dtPerformed,
+                    Remarks        = tempDetails.Remarks,
                     HisPhysicianId = hisProfileReq.HisPhysicianId,
-                    HisInchargeId = hisProfileReq.HisInchargeId
+                    HisInchargeId  = hisProfileReq.HisInchargeId
                 });
             }
 
