@@ -180,6 +180,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
             ViewBag.HisRequestId = new SelectList(db.HisRequests, "Id", "Title");
             ViewBag.HisPhysicianId = new SelectList(db.HisPhysicians, "Id", "Name", iPhysician);
             ViewBag.HisInchargeId = new SelectList(db.HisIncharges, "Id", "Name");
+
             return View(newreq);
         }
 
@@ -225,6 +226,30 @@ namespace LIS.v10.Areas.HIS10.Controllers
             Models.HisProfileReq hisProfileReq = (HisProfileReq) Session["CreateRequestHdr"];
 
             // TO-DO: add template details to profile requests
+            List<HisProfileReq> requestList = new List<HisProfileReq>();
+
+            //get details of the selected template 
+            List<HisTemplateReqItem> template = db.HisTemplateReqItems.Where(t => t.HisTemplateRequestId == (int)Id).ToList();
+
+            foreach (var tempDetails in template)
+            {
+                requestList.Add(new HisProfileReq() {
+                    HisProfileId = hisProfileReq.HisProfileId,
+                    HisRequestId = hisProfileReq.HisRequestId,
+                    dtRequested  = hisProfileReq.dtRequested,
+                    dtSchedule   = DateTime.Parse(hisProfileReq.dtSchedule.ToString()).AddDays((int)tempDetails.RefDay),
+                    dtPerformed  = hisProfileReq.dtPerformed,
+                    Remarks      = tempDetails.Remarks,
+                    HisPhysicianId = hisProfileReq.HisPhysicianId,
+                    HisInchargeId = hisProfileReq.HisInchargeId
+                });
+            }
+
+            db.HisProfileReqs.AddRange(requestList);
+            db.SaveChanges();
+
+            Console.WriteLine("HELLO");
+
 
             return RedirectToAction("Index");
         }
