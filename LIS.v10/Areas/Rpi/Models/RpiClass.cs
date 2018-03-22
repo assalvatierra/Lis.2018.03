@@ -17,6 +17,34 @@ namespace LIS.v10.Areas.Rpi.Models
 
     }
 
+    public class DeviceDetailsLists
+    {
+        public int Id { get; set; } //component
+        public string Description { get; set; }
+        public string Version { get; set; }
+        public double Temp { get; set; }
+        public double Humidity { get; set; }
+        public int Light { get; set; }
+        public int Fan { get; set; }
+        public int Water { get; set; }
+
+    }
+
+
+    public class DeviceSettingsDetails
+    {
+        public int Id { get; set; } //component
+        public string Description { get; set; }
+        public DateTime DateSchedule { get; set; }
+        public double Temp { get; set; }
+        public double Humidity { get; set; }
+        public int Light { get; set; }
+        public int Fan { get; set; }
+        public int Water { get; set; }
+
+    }
+
+
     public class LogDetailLists
     {
         public int Id { get; set; } //component

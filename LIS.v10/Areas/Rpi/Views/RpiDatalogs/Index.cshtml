@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Index</h2>
+<h2>Device logs</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -43,22 +43,3 @@
 }
 
 </table>
-
-<script>
-    raw = document.getElementById("test").innerText;
-    alert(raw);
-    // convert string to JSON
-    response = $.parseJSON(raw);
-
-    onclick = "$().MessageBox('msg');"
-    $(function () {
-        $.each(response, function (i, item) {
-            var $tr = $('<tr>').append(
-                $('<td>').text(item.rank),
-                $('<td>').text(item.content),
-                $('<td>').text(item.UID)
-            ); //.appendTo('#records_table');
-            console.log($tr.wrap('<p>').html());
-        });
-    });
-</script>

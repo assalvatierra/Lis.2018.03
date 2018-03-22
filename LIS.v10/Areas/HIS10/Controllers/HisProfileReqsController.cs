@@ -254,7 +254,7 @@ namespace LIS.v10.Areas.HIS10.Controllers
             Console.WriteLine("HELLO");
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { RptType = 6, status = 1 });
         }
 
         public ActionResult TemplateDetails(int? Id)

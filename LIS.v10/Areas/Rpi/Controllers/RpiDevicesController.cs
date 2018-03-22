@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LIS.v10.Areas.Rpi.Models;
+using Newtonsoft.Json;
 
 namespace LIS.v10.Areas.Rpi.Controllers
 {
@@ -19,7 +20,29 @@ namespace LIS.v10.Areas.Rpi.Controllers
         public ActionResult Index()
         {
             var rpiDevices = db.RpiDevices.Include(r => r.RpiVersion);
-            return View(rpiDevices.ToList());
+            
+            List<DeviceDetailsLists> details = new List<DeviceDetailsLists>();
+            foreach (var devices in rpiDevices)
+            {
+                var versionNo = db.RpiVersions.Where(r => r.Id == devices.RpiVersionId).FirstOrDefault();
+                var logs = db.RpiDatalogs.Where(r => r.RpiDeviceId == devices.Id).OrderByDescending(r=>r.DtRead).FirstOrDefault();
+
+                RpiData data = JsonConvert.DeserializeObject<RpiData>(logs.DataRead);
+                
+                details.Add(new DeviceDetailsLists() {
+                    Id = devices.Id,
+                    Description = devices.Description,
+                    Version = versionNo.VersionNo,
+                    Temp = double.Parse(data.Temp),
+                    Humidity = double.Parse(data.Humidity),
+                    Light = int.Parse(data.Light),
+                    Fan = int.Parse(data.Fan),
+                    Water = int.Parse(data.Water)
+
+                });
+            }
+
+            return View(details);
         }
 
         // GET: Rpi/RpiDevices/Details/5
