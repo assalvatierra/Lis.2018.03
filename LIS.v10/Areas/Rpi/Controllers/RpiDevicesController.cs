@@ -25,10 +25,23 @@ namespace LIS.v10.Areas.Rpi.Controllers
             foreach (var devices in rpiDevices)
             {
                 var versionNo = db.RpiVersions.Where(r => r.Id == devices.RpiVersionId).FirstOrDefault();
-                var logs = db.RpiDatalogs.Where(r => r.RpiDeviceId == devices.Id).OrderByDescending(r=>r.DtRead).FirstOrDefault();
 
-                RpiData data = JsonConvert.DeserializeObject<RpiData>(logs.DataRead);
-                
+                RpiDatalog logs = new RpiDatalog();
+                logs.DataRead = "{\"Temp\":0,\"Humidity\":0,\"Light\":0,\"Fan\":0,\"Water\":0}";
+                logs = db.RpiDatalogs.Where(r => r.RpiDeviceId == devices.Id).OrderByDescending(r=>r.DtRead).FirstOrDefault() ;
+
+                RpiData data = new RpiData();
+
+                if (logs != null)
+                {
+                     data = JsonConvert.DeserializeObject<RpiData>(logs.DataRead);
+                }
+                else
+                {
+                    string empty = "{\"Temp\":0,\"Humidity\":0,\"Light\":0,\"Fan\":0,\"Water\":0}";
+                    data = JsonConvert.DeserializeObject<RpiData>(empty);
+                }
+
                 details.Add(new DeviceDetailsLists() {
                     Id = devices.Id,
                     Description = devices.Description,
@@ -38,7 +51,6 @@ namespace LIS.v10.Areas.Rpi.Controllers
                     Light = int.Parse(data.Light),
                     Fan = int.Parse(data.Fan),
                     Water = int.Parse(data.Water)
-
                 });
             }
 

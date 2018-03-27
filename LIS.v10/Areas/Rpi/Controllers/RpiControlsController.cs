@@ -46,6 +46,10 @@ namespace LIS.v10.Areas.Rpi.Controllers
             //}
 
             //return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             var rpiControls = db.RpiControls.Include(r => r.RpiDevice).Where(r=>r.RpiDeviceId == id);
 

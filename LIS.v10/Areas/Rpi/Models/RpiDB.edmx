@@ -212,7 +212,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" />
           <NavigationProperty Name="RpiDatalogs" Relationship="RpiDB.RpiDeviceRpiDatalog" FromRole="RpiDevice" ToRole="RpiDatalog" />
           <NavigationProperty Name="RpiControls" Relationship="RpiDB.RpiDeviceRpiControl" FromRole="RpiDevice" ToRole="RpiControl" />
           <NavigationProperty Name="RpiVersion" Relationship="RpiDB.RpiVersionRpiDevice" FromRole="RpiDevice" ToRole="RpiVersion" />
@@ -223,8 +223,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DtRead" Type="String" Nullable="false" />
-          <Property Name="DataRead" Type="String" Nullable="false" />
+          <Property Name="DtRead" Type="String" Nullable="false" MaxLength="30" />
+          <Property Name="DataRead" Type="String" Nullable="false" MaxLength="100" />
           <NavigationProperty Name="RpiDevice" Relationship="RpiDB.RpiDeviceRpiDatalog" FromRole="RpiDatalog" ToRole="RpiDevice" />
           <Property Name="RpiDeviceId" Type="Int32" Nullable="false" />
         </EntityType>
@@ -233,8 +233,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DtSchedule" Type="String" Nullable="false" />
-          <Property Name="Data" Type="String" Nullable="false" />
+          <Property Name="DtSchedule" Type="String" Nullable="false" MaxLength="30" />
+          <Property Name="Data" Type="String" Nullable="false" MaxLength="100" />
           <NavigationProperty Name="RpiDevice" Relationship="RpiDB.RpiDeviceRpiControl" FromRole="RpiControl" ToRole="RpiDevice" />
           <Property Name="RpiDeviceId" Type="Int32" Nullable="false" />
         </EntityType>
@@ -243,8 +243,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VersionNo" Type="String" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="VersionNo" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" />
           <NavigationProperty Name="RpiDevices" Relationship="RpiDB.RpiVersionRpiDevice" FromRole="RpiVersion" ToRole="RpiDevice" />
           <NavigationProperty Name="RpiVersionMaps" Relationship="RpiDB.RpiVersionRpiVersionMap" FromRole="RpiVersion" ToRole="RpiVersionMap" />
         </EntityType>
@@ -253,8 +253,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameMap" Type="String" Nullable="false" />
-          <Property Name="PinNo" Type="String" Nullable="false" />
+          <Property Name="NameMap" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="PinNo" Type="String" Nullable="false" MaxLength="3" />
           <NavigationProperty Name="RpiComponent" Relationship="RpiDB.RpiComponentRpiVersionMap" FromRole="RpiVersionMap" ToRole="RpiComponent" />
           <Property Name="RpiComponentId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="RpiVersion" Relationship="RpiDB.RpiVersionRpiVersionMap" FromRole="RpiVersionMap" ToRole="RpiVersion" />
@@ -265,8 +265,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ComponentName" Type="String" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="ComponentName" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" />
           <NavigationProperty Name="RpiVersionMaps" Relationship="RpiDB.RpiComponentRpiVersionMap" FromRole="RpiComponent" ToRole="RpiVersionMap" />
           <NavigationProperty Name="RpiDataType" Relationship="RpiDB.RpiDataTypeRpiComponent" FromRole="RpiComponent" ToRole="RpiDataType" />
           <Property Name="RpiDataTypeId" Nullable="false" Type="Int32" />
@@ -276,7 +276,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" />
           <NavigationProperty Name="RpiComponents" Relationship="RpiDB.RpiDataTypeRpiComponent" FromRole="RpiDataType" ToRole="RpiComponent" />
         </EntityType>
         <Association Name="RpiDeviceRpiDatalog">

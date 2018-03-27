@@ -345,7 +345,6 @@ namespace LIS.v10
 
                 if(DateTime.Parse(dtSchedule.ToString()).CompareTo(DateTime.Now) <= 0)
                 {
-
                     Dt.Rows.Add(Id, dtSchedule, Data, rpiDeviceId);
                     break;
                 }
