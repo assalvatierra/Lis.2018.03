@@ -34,13 +34,13 @@ namespace LIS.v10.Areas.Rpi.Models
     public class DeviceSettingsDetails
     {
         public int Id { get; set; } //component
-        public string Description { get; set; }
         public DateTime DateSchedule { get; set; }
-        public double Temp { get; set; }
-        public double Humidity { get; set; }
+        public double TempMin { get; set; }
+        public double TempMax { get; set; }
         public int Light { get; set; }
-        public int Fan { get; set; }
-        public int Water { get; set; }
+        public int Socket01 { get; set; }
+        public int Socket02 { get; set; }
+        public int rpiDeviceId { get; set; }
 
     }
 

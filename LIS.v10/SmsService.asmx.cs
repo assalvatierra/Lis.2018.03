@@ -319,6 +319,48 @@ namespace LIS.v10
             Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
         }
 
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public void rpi_getLatestControl(int deviceId)
+        {
+
+            var recentControls = rpidb.RpiControls.Where(m => m.RpiDeviceId == deviceId ).OrderByDescending(m=>m.DtSchedule).ToList();
+
+            DataTable Dt = new DataTable("Table");
+
+            Dt.Columns.Add("Id", typeof(int));
+            Dt.Columns.Add("DtSchedule", typeof(DateTime));
+            Dt.Columns.Add("Data", typeof(string));
+            Dt.Columns.Add("RpiDeviceId", typeof(int));
+
+            //get details of each failed items from recipientId
+            foreach (var control in recentControls)
+            {
+
+                int Id = control.Id; //component id  
+                DateTime dtSchedule = DateTime.Parse( control.DtSchedule);
+                string Data = control.Data;
+                int rpiDeviceId = control.RpiDeviceId;
+
+                if(DateTime.Parse(dtSchedule.ToString()).CompareTo(DateTime.Now) <= 0)
+                {
+
+                    Dt.Rows.Add(Id, dtSchedule, Data, rpiDeviceId);
+                    break;
+                }
+
+            }
+
+            DataSet ds = new DataSet();
+            ds.Tables.Add(Dt);
+            ds.DataSetName = "Table";
+            
+            Context.Response.Clear();
+            Context.Response.ContentType = "application/json";
+            Context.Response.Write(JsonConvert.SerializeObject(ds, Newtonsoft.Json.Formatting.Indented));
+        }
+
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public void rpi_getDataLog(int deviceId)

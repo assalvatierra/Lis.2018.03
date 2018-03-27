@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LIS.v10.Areas.Rpi.Models;
+using Newtonsoft.Json;
 
 namespace LIS.v10.Areas.Rpi.Controllers
 {
@@ -17,8 +18,58 @@ namespace LIS.v10.Areas.Rpi.Controllers
         // GET: Rpi/RpiControls
         public ActionResult Index(int? id)
         {
-            var rpiControls = db.RpiControls.Include(r => r.RpiDevice);
-            return View(rpiControls.Where(r=>r.RpiDeviceId == id).ToList());
+
+            // var rpiControls = db.RpiControls.Include(r => r.RpiDevice).Where(r => r.RpiDeviceId == id);
+            // return View(rpiControls.Where(r=>r.RpiDeviceId == id).ToList());
+            //if (rpiControls != null)
+            //{
+
+            //List<DeviceSettingsDetails> settingDetails = new List<DeviceSettingsDetails>();
+
+            //    foreach (var controls in rpiControls)
+            //    {
+            //        RpiData data = JsonConvert.DeserializeObject<RpiData>(controls.Data);
+
+            //        settingDetails.Add(new DeviceSettingsDetails()
+            //        {
+            //            Id = controls.Id,
+            //            Description = controls.RpiDevice.Description,
+            //            DateSchedule = DateTime.Parse(controls.DtSchedule),
+            //            Temp = double.Parse(data.Temp),
+            //            Humidity = double.Parse(data.Humidity),
+            //            Light = int.Parse(data.Light),
+            //            Fan = int.Parse(data.Fan),
+            //            Water = int.Parse(data.Water)
+            //        });
+            //    }
+            //    return View(settingDetails);
+            //}
+
+            //return View();
+
+            var rpiControls = db.RpiControls.Include(r => r.RpiDevice).Where(r=>r.RpiDeviceId == id);
+
+            List<DeviceSettingsDetails> details = new List<DeviceSettingsDetails>();
+            foreach (var controls in rpiControls)
+            {
+                // var logs = db.RpiDatalogs.Where(r => r.RpiDeviceId == devices.Id).OrderByDescending(r => r.DtRead).FirstOrDefault();
+
+                DeviceSettingsDetails data = JsonConvert.DeserializeObject<DeviceSettingsDetails>(controls.Data);
+                DeviceSettingsDetails settings = new DeviceSettingsDetails();
+
+                settings.Id = controls.Id;
+                settings.DateSchedule = DateTime.Parse(controls.DtSchedule);
+                settings.TempMin = data.TempMin;
+                settings.TempMax = data.TempMax;
+                settings.Socket01 = data.Socket01;
+                settings.Socket02 = data.Socket02;
+                settings.Light = data.Light;
+                settings.rpiDeviceId = controls.RpiDeviceId;
+
+                details.Add(settings);
+            }
+
+            return View(details);
         }
 
         // GET: Rpi/RpiControls/Details/5
@@ -46,15 +97,37 @@ namespace LIS.v10.Areas.Rpi.Controllers
         // POST: Rpi/RpiControls/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "Id,DtSchedule,Data,RpiDeviceId")] RpiControl rpiControl)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.RpiControls.Add(rpiControl);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+            
+        //    ViewBag.RpiDeviceId = new SelectList(db.RpiDevices, "Id", "Description", rpiControl.RpiDeviceId);
+        //    return View(rpiControl);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DtSchedule,Data,RpiDeviceId")] RpiControl rpiControl)
+        public ActionResult Create([Bind(Include = "DateSchedule,TempMin,TempMax,Light,Socket01,Socket02,RpiDeviceId")] DeviceSettingsDetails control)
         {
+            RpiControl rpiControl = new RpiControl();
             if (ModelState.IsValid)
             {
+                rpiControl.DtSchedule = control.DateSchedule.ToString();
+                rpiControl.RpiDeviceId = control.rpiDeviceId;
+                rpiControl.Data = "{\"TempMin\":"+ control.TempMin + ",\"TempMax\":" + control.TempMax + ",\"Light\":" + control.Light + ",\"Socket01\":" + control.Socket01 + ",\"Socket02\":" + control.Socket02 + "}";
+
                 db.RpiControls.Add(rpiControl);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", new { id = control.rpiDeviceId});
             }
 
             ViewBag.RpiDeviceId = new SelectList(db.RpiDevices, "Id", "Description", rpiControl.RpiDeviceId);
