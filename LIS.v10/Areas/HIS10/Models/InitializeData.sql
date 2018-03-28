@@ -48,23 +48,27 @@ insert into HisProfileReqs ([HisProfileId],[HisRequestId],[dtRequested],[dtSched
 values (1,1,'3/1/2018 10:00:00','3/6/2018 10:36:00','3/6/2018 10:36:00','Initial',1,1),
 	   (3,3,'3/6/2018 10:00:00','3/8/2018 9:36:00','3/8/2018 9:36:00','Initial',1,1),
 	   (3,1,'3/7/2018 9:00:00','3/8/2018 15:36:00','3/8/2018 15:36:00','Initial',1,1),
+	   
 	   (3,3,'3/8/2018 7:20:00','3/9/2018 17:36:00','3/9/2018 17:36:00','Initial',1,1),
 	   (3,2,'3/9/2018 15:32:00','3/10/2018 10:36:00','3/9/2018 17:36:00','Initial',1,1),
 	   (3,4,'3/10/2018 13:09:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
+	   
 	   (3,3,'3/10/2018 12:12:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
-	   (3,1,'3/11/2018 19:19:00','3/12/2018 10:36:00',NULL,'Initial',1,1),
-	   (2,2,'3/1/2018 10:00:00',NULL,NULL,'none',1,1);
+	   (3,1,'3/11/2018 19:19:00','3/14/2018 10:36:00',NULL,'Initial',1,1),
+	   (2,2,'3/1/2018 10:00:00','3/18/2018 10:36:00',NULL,'none',1,1);
 
 insert into HisNotifications ([RecType],[Recipient],[Message],[DtSending],[RefId],[RefTable])
-values ('Client','0','Test Message','3/6/2018 10:36:00',1,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION '+ char(13) +' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/6/2018 9:36:00',2,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/6/2018 15:36:00',3,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/6/2018 17:36:00',4,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','',5,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','',6,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','',7,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','',8,'HisProfileReqs'),
-	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 10:00:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','',9,'HisProfileReqs');
+values ('Client','0','NOTIFICATION ' + char(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/6/2018 10:36:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/6/2018 10:36:00',1,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION ' + char(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/8/2018 9:36:00 ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/8/2018 9:36:00',2,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/8/2018 15:36:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/8/2018 15:36:00',3,'HisProfileReqs'),
+	   
+	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/9/2018 5:36:00 PM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/9/2018 17:36:00',4,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/10/2018 10:36:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/10/2018 10:36:00',5,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/12/2018 10:36:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/12/2018 10:36:00',6,'HisProfileReqs'),
+	   
+	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/12/2018 10:36:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/12/2018 10:36:00',7,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/14/2018 10:36:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/14/2018 10:36:00',8,'HisProfileReqs'),
+	   ('Client','0','NOTIFICATION ' + CHAR(13) + ' For: Batch0301A ' + CHAR(13) + ' Request: Vacc 101 none ' + CHAR(13) + ' Scheduled: 3/18/2018 10:36:00 AM ' + CHAR(13) + ' By: Dr Apple Assisted ' + CHAR(13) + ' By: Yeng Guiao ','3/18/2018 10:36:00',9,'HisProfileReqs');
 
 
 insert into HisNotificationRecipients ([HisNotificationId],[ContactInfo])
